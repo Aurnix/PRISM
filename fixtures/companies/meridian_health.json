@@ -1,0 +1,145 @@
+{
+  "slug": "meridian_health",
+  "company_name": "Meridian Health Tech",
+  "domain": "meridianhealthtech.com",
+  "blog_url": "https://meridianhealthtech.com/blog",
+  "blog_rss": null,
+
+  "firmographics": {
+    "founded_year": 2021,
+    "headcount": 200,
+    "headcount_growth_12mo": 0.42,
+    "funding_stage": "Series B",
+    "total_raised": 54000000,
+    "last_round_amount": 38000000,
+    "last_round_date": "2025-08-22",
+    "last_round_lead": "Andreessen Horowitz",
+    "industry": "Healthcare",
+    "hq_location": "Boston, MA",
+    "description": "HIPAA-compliant patient engagement and clinical workflow automation platform for mid-size health systems and specialty clinics"
+  },
+
+  "tech_stack": {
+    "erp_accounting": "QuickBooks Online",
+    "crm": "Salesforce",
+    "payment_processor": "Stripe",
+    "cloud_provider": "AWS",
+    "primary_languages": ["Python", "TypeScript", "Go"],
+    "stack_maturity": "growing",
+    "migration_signals": [
+      "Controller mentioned evaluating mid-market accounting solutions in Slack AMA",
+      "Job posting for Staff Accountant references multi-entity consolidation experience"
+    ]
+  },
+
+  "contacts": [
+    {
+      "name": "Rachel Dominguez",
+      "title": "VP Finance",
+      "linkedin_url": "https://linkedin.com/in/racheldominguez",
+      "start_date_current_role": "2025-06-15",
+      "previous_company": "Veeva Systems",
+      "previous_title": "Director of Finance",
+      "buying_role": "champion",
+      "linkedin_posts": [
+        {
+          "date": "2026-01-18",
+          "text": "Healthcare SaaS finance teams face a unique challenge: reconciling complex payer mixes, deferred revenue from multi-year contracts, and compliance-driven audit trails -- all while growing 40%+ YoY. We're hiring a Staff Accountant who can thrive in this chaos. DM me if you know someone great."
+        },
+        {
+          "date": "2025-11-04",
+          "text": "Just wrapped our first month-end close at Meridian. Coming from Veeva, I knew healthcare SaaS had complex revenue recognition, but the manual processes here are something else. Excited to modernize our finance stack over the next two quarters. Big things ahead."
+        },
+        {
+          "date": "2025-09-22",
+          "text": "Thrilled to share that Meridian Health Tech closed our $38M Series B led by a]16z. The healthcare engagement space is enormous and we're just getting started. My first priority: building the finance infrastructure to support the next stage of growth."
+        }
+      ]
+    },
+    {
+      "name": "David Okafor",
+      "title": "CEO & Co-Founder",
+      "linkedin_url": "https://linkedin.com/in/davidokafor",
+      "start_date_current_role": "2021-03-01",
+      "previous_company": "Epic Systems",
+      "previous_title": "Product Director",
+      "buying_role": "economic_buyer",
+      "linkedin_posts": [
+        {
+          "date": "2026-02-03",
+          "text": "Our board asked a great question last week: how do we maintain HIPAA-grade rigor in our financial reporting as we scale past 200 people? The answer isn't more headcount in finance -- it's better tooling. We need our finance team spending time on strategic decisions, not reconciliation spreadsheets."
+        },
+        {
+          "date": "2025-10-12",
+          "text": "Meridian just crossed 200 employees. Two years ago we were 35 people in a WeWork. The operational complexity of scaling a healthcare SaaS company is immense -- from SOC 2 to HIPAA to ASC 606, every process needs to be auditable. We're investing heavily in infrastructure this year."
+        }
+      ]
+    },
+    {
+      "name": "Priya Nair",
+      "title": "CTO",
+      "linkedin_url": "https://linkedin.com/in/priyanair",
+      "start_date_current_role": "2021-03-01",
+      "previous_company": "Athenahealth",
+      "previous_title": "VP Engineering",
+      "buying_role": "technical_gatekeeper",
+      "linkedin_posts": [
+        {
+          "date": "2025-12-09",
+          "text": "We're consolidating our internal tools strategy at Meridian. As a healthcare company, every vendor we onboard goes through security review and BAA signing. I'd love to see more B2B tools ship with HIPAA compliance out of the box rather than making it an enterprise add-on."
+        }
+      ]
+    }
+  ],
+
+  "signals": [
+    {
+      "signal_type": "funding_round",
+      "description": "$38M Series B led by Andreessen Horowitz",
+      "source": "Crunchbase",
+      "detected_date": "2025-08-22"
+    },
+    {
+      "signal_type": "new_executive_finance",
+      "description": "VP Finance Rachel Dominguez hired from Veeva Systems",
+      "source": "LinkedIn",
+      "detected_date": "2025-06-15"
+    },
+    {
+      "signal_type": "job_posting_finance",
+      "description": "Hiring Staff Accountant with multi-entity consolidation experience",
+      "source": "LinkedIn Jobs",
+      "detected_date": "2026-01-10"
+    },
+    {
+      "signal_type": "migration_signal",
+      "description": "VP Finance LinkedIn post references need to modernize finance stack",
+      "source": "LinkedIn",
+      "detected_date": "2025-11-04"
+    }
+  ],
+
+  "additional_content": [
+    {
+      "source_type": "blog",
+      "title": "Why Healthcare SaaS Companies Need a Different Approach to Compliance",
+      "date": "2025-12-15",
+      "url": "https://meridianhealthtech.com/blog/healthcare-saas-compliance-approach",
+      "text": "At Meridian, compliance isn't a checkbox -- it's the foundation everything else is built on. When you're handling protected health information and processing payments across dozens of health systems, every internal process needs to withstand audit scrutiny.\n\nThis extends well beyond our product. Our internal operations -- financial reporting, vendor management, employee data handling -- all fall under the same compliance umbrella. We've learned the hard way that tools built for general-purpose SaaS companies often lack the audit trail depth that healthcare demands.\n\nOur finance team spends roughly 30% of their time on compliance documentation for financial processes alone. That's before you factor in the actual month-end close, which currently takes us 18 business days. For context, best-in-class SaaS companies close in 5-7 days.\n\nAs we've grown from 50 to 200 employees in 18 months, every manual process has become a bottleneck. We're at the point where the tools that got us here -- spreadsheets, QuickBooks, manual reconciliation -- are actively limiting our ability to move fast. The next chapter of Meridian's growth requires operational infrastructure that matches our product ambitions.\n\nWe're not alone in this. Every healthcare SaaS company hits this inflection point. The question is whether you address it proactively or wait until an auditor flags it for you."
+    },
+    {
+      "source_type": "job_posting",
+      "title": "Staff Accountant",
+      "date": "2026-01-10",
+      "url": "https://meridianhealthtech.com/careers/staff-accountant",
+      "text": "Meridian Health Tech is hiring a Staff Accountant to join our growing finance team in Boston. You'll report to the VP Finance and be responsible for month-end close activities, revenue recognition under ASC 606, multi-entity consolidation, and accounts payable/receivable management.\n\nRequirements:\n- 3-5 years accounting experience, preferably in SaaS or healthcare tech\n- Experience with multi-entity consolidation across 2+ legal entities\n- Strong understanding of ASC 606 revenue recognition for subscription businesses\n- Comfort working in a fast-paced environment where processes are still being built\n- Experience with QuickBooks Online required; experience with mid-market accounting platforms (NetSuite, Sage Intacct, or similar) strongly preferred\n- CPA preferred but not required\n\nWhat you'll do:\n- Own the month-end close process and drive it from 18 days to under 10\n- Build and maintain revenue recognition schedules for our growing contract base\n- Support our first SOC 2 Type II audit from the finance side\n- Help evaluate and implement our next-generation accounting platform\n\nWe're a Series B healthcare SaaS company growing 40%+ year over year. This is a foundational hire for our finance team."
+    },
+    {
+      "source_type": "press",
+      "title": "Meridian Health Tech Raises $38M Series B to Expand Patient Engagement Platform",
+      "date": "2025-08-23",
+      "url": "https://techcrunch.com/2025/08/23/meridian-health-tech-series-b",
+      "text": "Meridian Health Tech, a Boston-based healthcare SaaS startup, announced a $38 million Series B round led by Andreessen Horowitz with participation from existing investors General Catalyst and Bessemer Venture Partners. The company plans to use the funding to expand its clinical workflow automation product into new specialties and grow its go-to-market team.\n\nCEO David Okafor said the company has tripled its customer base over the past year and now serves over 150 health systems and specialty clinic networks. 'We're at an inflection point where healthcare organizations are demanding integrated engagement platforms rather than point solutions,' Okafor said.\n\nThe company has grown from 80 to 200 employees in the past 12 months and plans to reach 300 by mid-2026."
+    }
+  ]
+}

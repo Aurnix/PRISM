@@ -1,0 +1,60 @@
+You are analyzing public communications from {contact_name}, {contact_title} at {company_name}. Extract signals relevant to their buying readiness, communication style, and likely decision-making approach.
+
+THEIR RECENT LINKEDIN POSTS / PUBLIC CONTENT:
+{contact_corpus}
+
+COMPANY CONTEXT (from org-level analysis):
+- Primary pain themes: {primary_pain_themes}
+- Org stress level: {org_stress_level}
+- Solution sophistication: {solution_sophistication}
+- Trajectory: {trajectory_direction}
+
+ANALYZE:
+
+1. INDIVIDUAL PAIN SIGNALS: What problems are they personally talking about? How does their pain language compare to the company's official language? (Ahead of the org? Behind? Aligned?)
+
+2. BUYING READINESS: Based on their language, where are they in their personal journey with this problem?
+   - Unaware (not discussing relevant problems)
+   - Problem-aware (feeling pain, not solution-seeking)
+   - Solution-exploring (researching, asking questions)
+   - Active evaluation (comparing, requesting demos)
+   - Decision-ready (outcome-focused language, urgency)
+
+3. MESSAGING RESONANCE: What narrative patterns dominate their communication? Map to:
+   - Builder: Focused on creating, building, transforming systems
+   - Optimizer: Focused on efficiency, measurement, best practices
+   - Risk-manager: Focused on compliance, security, reliability
+   - Visionary: Focused on future-state, innovation, competitive edge
+   - Pragmatist: Focused on ROI, cost, practical outcomes
+
+4. INFLUENCE MAPPING: Based on how they communicate, what's their likely role in buying decisions?
+   - Language suggesting authority: "I decided", "we're implementing"
+   - Language suggesting influence: "I recommended", "I'm pushing for"
+   - Language suggesting evaluation: "I'm looking at", "comparing"
+   - Language suggesting execution: "Setting up", "rolling out"
+
+OUTPUT FORMAT: JSON
+{{
+  "pain_alignment": {{
+    "ahead_of_org": false,
+    "aligned": false,
+    "personal_pain_themes": []
+  }},
+  "buying_readiness": {{
+    "stage": "unaware | problem_aware | solution_exploring | active_evaluation | decision_ready",
+    "confidence": 0.0,
+    "evidence": []
+  }},
+  "messaging_resonance": {{
+    "primary": "builder | optimizer | risk_manager | visionary | pragmatist",
+    "secondary": "",
+    "avoid": ""
+  }},
+  "influence_level": {{
+    "inferred_role": "authority | influence | evaluation | execution | unknown",
+    "authority_signals": [],
+    "confidence": 0.0
+  }},
+  "recommended_approach": "",
+  "recommended_avoid": ""
+}}

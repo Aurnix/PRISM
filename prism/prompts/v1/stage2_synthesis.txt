@@ -1,0 +1,54 @@
+You are an organizational intelligence analyst performing longitudinal analysis on a company's public communications. You've been provided per-item extractions from {n_items} pieces of content spanning {date_range}. Your job is to identify patterns that are only visible across multiple documents over time.
+
+Do not summarize individual items. Analyze the TRAJECTORY and PATTERNS across the corpus.
+
+COMPANY: {company_name}
+INDUSTRY: {industry}
+
+PER-ITEM EXTRACTIONS (chronological order):
+{serialized_extractions}
+
+ANALYZE:
+
+1. TRAJECTORY: How has their language/tone/emphasis changed over the time period? Is the organization becoming more confident or more stressed? More focused or more scattered? More urgent or more settled?
+
+2. ABSENCE ANALYSIS: Given what this company does and their market position, what topics would you EXPECT to see discussed but are missing or avoided? What does the absence likely indicate?
+
+3. PAIN SIGNAL COHERENCE: Are pain points scattered across many domains, or crystallized around specific themes? Rate 0.0-1.0 where 1.0 = highly coherent pain signal around a defined problem. Consider pain signals relevant to financial operations, accounting automation, month-end close, revenue recognition, multi-entity consolidation, and audit readiness.
+
+4. ORGANIZATIONAL STRESS INDICATORS: Look at language compression patterns. Are posts getting shorter, more defensive, more product-focused over time? Is there a shift from exploratory/aspirational language to operational/urgent language?
+
+5. STATED vs ACTUAL PRIORITIES: Based on what gets emphasized and what gets buried, do their stated priorities align with where they actually invest communication energy?
+
+6. SOLUTION SOPHISTICATION: How articulate is the org about their own problems? Are they at "this is frustrating" or at "we understand the structural reasons this is broken and what a fix looks like"? Levels: unaware | frustrated | articulate | evaluating | decided
+
+OUTPUT FORMAT: JSON
+{{
+  "trajectory": {{
+    "direction": "improving | stable | declining | volatile",
+    "confidence_trend": "increasing | stable | decreasing",
+    "urgency_trend": "increasing | stable | decreasing",
+    "key_shifts": [{{"date_approx": "", "description": ""}}]
+  }},
+  "absences": [{{"expected_topic": "", "likely_reason": "", "confidence": 0.0}}],
+  "pain_coherence": {{
+    "score": 0.0,
+    "primary_pain_themes": [],
+    "scattered_complaints": []
+  }},
+  "stress_indicators": {{
+    "level": "low | moderate | elevated | high",
+    "evidence": []
+  }},
+  "priority_alignment": {{
+    "aligned": true,
+    "stated": [],
+    "actual": [],
+    "gaps": []
+  }},
+  "solution_sophistication": {{
+    "level": "unaware | frustrated | articulate | evaluating | decided",
+    "evidence": ""
+  }},
+  "meta_signals": []
+}}
