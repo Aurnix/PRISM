@@ -1,0 +1,141 @@
+{
+  "slug": "stacksync",
+  "company_name": "StackSync",
+  "domain": "stacksync.dev",
+  "blog_url": "https://stacksync.dev/blog",
+  "blog_rss": null,
+
+  "firmographics": {
+    "founded_year": 2022,
+    "headcount": 85,
+    "headcount_growth_12mo": 0.28,
+    "funding_stage": "Series A",
+    "total_raised": 18000000,
+    "last_round_amount": 14000000,
+    "last_round_date": "2025-07-10",
+    "last_round_lead": "Bessemer Venture Partners",
+    "industry": "SaaS",
+    "hq_location": "Austin, TX",
+    "description": "Developer tools platform that automates environment configuration and infrastructure-as-code workflows for engineering teams"
+  },
+
+  "tech_stack": {
+    "erp_accounting": "QuickBooks Online",
+    "crm": "HubSpot",
+    "payment_processor": "Stripe",
+    "cloud_provider": "GCP",
+    "primary_languages": ["Go", "TypeScript"],
+    "stack_maturity": "early",
+    "migration_signals": [
+      "New Controller mentioned evaluating accounting systems in onboarding notes",
+      "Job posting for Finance Manager references experience with modern accounting platforms"
+    ]
+  },
+
+  "contacts": [
+    {
+      "name": "Lisa Truong",
+      "title": "Controller",
+      "linkedin_url": "https://linkedin.com/in/lisatruong-cpa",
+      "start_date_current_role": "2025-12-01",
+      "previous_company": "Datadog",
+      "previous_title": "Senior Accounting Manager",
+      "buying_role": "champion",
+      "linkedin_posts": [
+        {
+          "date": "2026-02-10",
+          "text": "Two months into building the finance function at StackSync. It's equal parts thrilling and terrifying. Revenue growing 28% with a team of... me and one part-time bookkeeper. QuickBooks is holding on but just barely. If anyone has advice on the right time to upgrade your accounting stack at a Series A company, I'd love to hear your experience."
+        },
+        {
+          "date": "2026-01-20",
+          "text": "Something I learned at Datadog that applies at every growth stage: your financial close process is a leading indicator of operational maturity. If it takes more than a week, you're accumulating decision debt. Right now at StackSync we're at 10 days. I want us at 5 by end of Q2."
+        }
+      ]
+    },
+    {
+      "name": "Kai Ramirez",
+      "title": "CEO & Co-Founder",
+      "linkedin_url": "https://linkedin.com/in/kairamirez",
+      "start_date_current_role": "2022-01-15",
+      "previous_company": "HashiCorp",
+      "previous_title": "Senior Product Manager",
+      "buying_role": "economic_buyer",
+      "linkedin_posts": [
+        {
+          "date": "2026-01-30",
+          "text": "One underrated Series A milestone: hiring your first dedicated finance leader. We just brought on Lisa Truong from Datadog as our Controller and the impact was immediate. Within her first month she identified $180K in annual savings from contract renegotiations we'd been too busy to pursue. The ROI on finance talent at this stage is enormous."
+        },
+        {
+          "date": "2025-09-14",
+          "text": "StackSync hit $8M ARR this quarter. When we started in 2022, everyone said developer tools was too crowded. Turns out there's plenty of room when you solve real workflow pain. Now the challenge shifts: how do we build the operational muscle to go from $8M to $30M without losing the speed that got us here?"
+        }
+      ]
+    },
+    {
+      "name": "Jordan Whitfield",
+      "title": "Head of Engineering",
+      "linkedin_url": "https://linkedin.com/in/jordanwhitfield",
+      "start_date_current_role": "2023-06-01",
+      "previous_company": "Vercel",
+      "previous_title": "Engineering Manager",
+      "buying_role": "technical_gatekeeper",
+      "linkedin_posts": [
+        {
+          "date": "2025-11-18",
+          "text": "We've been having interesting conversations about what internal tools to build vs buy. Our engineering team is 40 people and every hour spent on internal tooling is an hour not spent on the product. Currently auditing everything we've built internally to see what can be replaced with SaaS. Finance tooling is top of the list."
+        }
+      ]
+    }
+  ],
+
+  "signals": [
+    {
+      "signal_type": "funding_round",
+      "description": "$14M Series A led by Bessemer Venture Partners with participation from Craft Ventures",
+      "source": "Crunchbase",
+      "detected_date": "2025-07-10"
+    },
+    {
+      "signal_type": "new_executive_finance",
+      "description": "Lisa Truong hired as Controller, previously Senior Accounting Manager at Datadog",
+      "source": "LinkedIn",
+      "detected_date": "2025-12-01"
+    },
+    {
+      "signal_type": "job_posting_finance",
+      "description": "Hiring Finance Manager to support Controller; posting mentions need for SaaS metrics expertise and familiarity with modern accounting platforms",
+      "source": "LinkedIn Jobs",
+      "detected_date": "2026-02-05"
+    },
+    {
+      "signal_type": "linkedin_post_pain",
+      "description": "Controller publicly asking for advice on when to upgrade accounting stack; mentions QuickBooks barely holding on",
+      "source": "LinkedIn",
+      "detected_date": "2026-02-10"
+    }
+  ],
+
+  "additional_content": [
+    {
+      "source_type": "blog",
+      "title": "From $0 to $8M ARR: What We Got Right and Wrong",
+      "date": "2025-10-02",
+      "url": "https://stacksync.dev/blog/zero-to-8m-arr",
+      "text": "StackSync hit $8M in annual recurring revenue last quarter, and we want to share an honest retrospective on what worked and what didn't.\n\nWhat we got right: relentless focus on developer experience, building in public, and hiring senior engineers who could own entire subsystems. Our product-led growth motion now drives 65% of new revenue, and our enterprise sales team handles the rest.\n\nWhat we got wrong: we underinvested in operations. For the first two years, our CEO was doing accounting in QuickBooks on Sunday nights. We didn't hire a dedicated finance person until last quarter. Revenue recognition was a spreadsheet that only one person understood. Our billing system was a collection of Stripe webhooks and cron jobs held together by hope.\n\nThe lesson: operational debt compounds just like technical debt. We're now investing heavily in building the operational foundation to support our next phase of growth. We recently hired Lisa Truong as our Controller, and she's already transforming how we think about financial operations.\n\nFor other founders at this stage: don't wait until your audit reveals problems to invest in finance infrastructure. The cost of getting it wrong grows exponentially with revenue."
+    },
+    {
+      "source_type": "job_posting",
+      "title": "Finance Manager",
+      "date": "2026-02-05",
+      "url": "https://stacksync.dev/careers/finance-manager",
+      "text": "StackSync is hiring a Finance Manager to join our small but growing finance team. You'll report to our Controller and help build the financial infrastructure for a company on the path from $8M to $30M ARR.\n\nWhat you'll do:\n- Own accounts payable, expense management, and vendor payments\n- Support monthly close process including journal entries, accruals, and reconciliations\n- Build SaaS metrics dashboards (ARR, NRR, CAC, LTV) for the leadership team\n- Help evaluate and implement modern accounting and financial planning tools\n- Manage sales tax compliance across multiple states\n\nWhat we're looking for:\n- 3-5 years of accounting or finance experience, preferably at SaaS companies\n- Experience with QuickBooks Online (required) and at least one modern accounting platform (Rillet, Puzzle, NetSuite, or similar)\n- Strong Excel/Google Sheets skills; SQL is a plus\n- CPA or CPA-track preferred\n- Someone who thrives in ambiguity and wants to build processes, not just follow them\n\nWe're a team of 85 based in Austin, TX. Hybrid work with 3 days in office."
+    },
+    {
+      "source_type": "press",
+      "title": "StackSync Closes $14M Series A to Expand Developer Tools Platform",
+      "date": "2025-07-11",
+      "url": "https://techcrunch.com/2025/07/11/stacksync-series-a",
+      "text": "StackSync, the Austin-based developer tools company that automates environment configuration for engineering teams, has raised $14 million in Series A funding led by Bessemer Venture Partners. The company has grown to $8M ARR with 85 employees and plans to use the funding to expand its platform, grow its go-to-market team, and invest in operational infrastructure. CEO Kai Ramirez noted that the company's product-led growth strategy has driven strong adoption among mid-market engineering teams, with over 1,200 companies now using the platform."
+    }
+  ]
+}

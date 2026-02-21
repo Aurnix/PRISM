@@ -1,0 +1,174 @@
+{
+  "slug": "brighthire",
+  "company_name": "BrightHire",
+  "domain": "brighthire.io",
+  "blog_url": "https://brighthire.io/blog",
+  "blog_rss": null,
+
+  "firmographics": {
+    "founded_year": 2019,
+    "headcount": 320,
+    "headcount_growth_12mo": 0.38,
+    "funding_stage": "Series C",
+    "total_raised": 112000000,
+    "last_round_amount": 62000000,
+    "last_round_date": "2025-09-05",
+    "last_round_lead": "Tiger Global",
+    "industry": "SaaS",
+    "hq_location": "New York, NY",
+    "description": "AI-powered recruiting and talent intelligence platform that helps enterprise companies make faster, more equitable hiring decisions"
+  },
+
+  "tech_stack": {
+    "erp_accounting": "NetSuite",
+    "crm": "Salesforce",
+    "payment_processor": "Stripe",
+    "cloud_provider": "AWS",
+    "primary_languages": ["Python", "TypeScript", "Kotlin"],
+    "stack_maturity": "growing",
+    "migration_signals": [
+      "CFO LinkedIn post expresses frustration with NetSuite customization costs",
+      "Job posting for Director of FP&A mentions exploring modern financial tools",
+      "Blog post discusses need for better real-time financial visibility"
+    ]
+  },
+
+  "contacts": [
+    {
+      "name": "Samantha Okafor",
+      "title": "CFO",
+      "linkedin_url": "https://linkedin.com/in/samanthaokafor",
+      "start_date_current_role": "2025-08-01",
+      "previous_company": "Shopify",
+      "previous_title": "VP Finance, Revenue Operations",
+      "buying_role": "economic_buyer",
+      "linkedin_posts": [
+        {
+          "date": "2026-02-14",
+          "text": "Controversial opinion: NetSuite is the enterprise software equivalent of a house renovation that's always over budget and never finished. Six months in at BrightHire and we've spent more on NetSuite consultants than on our entire finance team's salaries. There has to be a better way to run accounting at a $45M ARR company."
+        },
+        {
+          "date": "2026-01-25",
+          "text": "The board wants real-time financial metrics. Our current infrastructure delivers month-old data after a 15-day close process. I keep telling founders: the gap between what your board needs and what your finance team can deliver is your single biggest governance risk. We're working on closing that gap at BrightHire but it requires fundamental changes to our financial stack."
+        },
+        {
+          "date": "2025-12-08",
+          "text": "Looking back on my first quarter at BrightHire. The company is exceptional -- incredible product, strong market position, talented team. The finance infrastructure, however, was clearly built for a company one-third our current size. Multi-entity consolidation across four entities in two countries is consuming 40% of my team's capacity. 2026 will be the year we fix the foundation."
+        }
+      ]
+    },
+    {
+      "name": "Eric Zhang",
+      "title": "CEO & Co-Founder",
+      "linkedin_url": "https://linkedin.com/in/ericzhangceo",
+      "start_date_current_role": "2019-05-01",
+      "previous_company": "LinkedIn",
+      "previous_title": "Director of Product",
+      "buying_role": "economic_buyer",
+      "linkedin_posts": [
+        {
+          "date": "2026-01-15",
+          "text": "BrightHire ended 2025 at $45M ARR, up from $28M at the start of the year. 60% growth while improving unit economics across the board. Huge credit to our team of 320 who made this happen. 2026 priorities: enterprise expansion, international growth, and building the operational excellence needed to get to $100M."
+        },
+        {
+          "date": "2025-11-20",
+          "text": "Best hire of 2025: bringing on Samantha Okafor as CFO. She led finance at Shopify through their hypergrowth phase and she's already bringing that same rigor to BrightHire. When your CFO tells you the finance stack needs an overhaul, you listen."
+        }
+      ]
+    },
+    {
+      "name": "Tom Blackwell",
+      "title": "VP Engineering",
+      "linkedin_url": "https://linkedin.com/in/tomblackwell-eng",
+      "start_date_current_role": "2023-03-15",
+      "previous_company": "Workday",
+      "previous_title": "Senior Engineering Manager",
+      "buying_role": "technical_gatekeeper",
+      "linkedin_posts": [
+        {
+          "date": "2026-01-05",
+          "text": "My engineering team has been pulled into three separate financial systems integration projects this quarter. Custom NetSuite SuiteScript development, API connectors for billing reconciliation, and a homegrown reporting pipeline that breaks every month-end. We need a finance stack that doesn't require engineering support to function. This is not a sustainable use of our resources."
+        }
+      ]
+    },
+    {
+      "name": "Andrea Kim",
+      "title": "Senior Accountant",
+      "linkedin_url": "https://linkedin.com/in/andreakim-accounting",
+      "start_date_current_role": "2024-06-01",
+      "previous_company": "Greenhouse",
+      "previous_title": "Staff Accountant",
+      "buying_role": "user",
+      "linkedin_posts": [
+        {
+          "date": "2025-12-22",
+          "text": "Month-end close complete. Only took 15 days this time. I know some of you are going to say that's too long, and you're right. When you have four entities, two currencies, and a NetSuite instance that requires a consultant to modify any workflow, 15 days feels like a miracle. Hopeful that the changes our new CFO is planning for 2026 will make a real difference."
+        }
+      ]
+    }
+  ],
+
+  "signals": [
+    {
+      "signal_type": "funding_round",
+      "description": "$62M Series C led by Tiger Global, with participation from Insight Partners and existing investors",
+      "source": "Crunchbase",
+      "detected_date": "2025-09-05"
+    },
+    {
+      "signal_type": "new_executive_finance",
+      "description": "Samantha Okafor hired as CFO, previously VP Finance Revenue Operations at Shopify",
+      "source": "LinkedIn",
+      "detected_date": "2025-08-01"
+    },
+    {
+      "signal_type": "job_posting_finance",
+      "description": "Hiring Director of FP&A; posting mentions need for real-time financial reporting and experience evaluating modern financial platforms",
+      "source": "LinkedIn Jobs",
+      "detected_date": "2026-01-28"
+    },
+    {
+      "signal_type": "migration_signal",
+      "description": "CFO publicly expressing frustration with NetSuite costs and limitations; VP Engineering notes unsustainable engineering investment in finance systems",
+      "source": "LinkedIn",
+      "detected_date": "2026-02-14"
+    },
+    {
+      "signal_type": "tech_stack_change",
+      "description": "Multiple internal signals of dissatisfaction with current NetSuite implementation; blog post discusses need for financial infrastructure overhaul",
+      "source": "Company Blog",
+      "detected_date": "2026-01-12"
+    }
+  ],
+
+  "additional_content": [
+    {
+      "source_type": "blog",
+      "title": "Building for Scale: BrightHire's 2026 Operational Priorities",
+      "date": "2026-01-12",
+      "url": "https://brighthire.io/blog/2026-operational-priorities",
+      "text": "As BrightHire enters 2026, we're making deliberate investments in the operational infrastructure that will carry us from $45M to $100M ARR. Our product and go-to-market engine is humming, but we've learned that sustainable growth requires equally strong back-office operations.\n\nFinancial infrastructure is at the top of our priority list. We implemented NetSuite in 2023 when we were a 120-person company doing $15M in revenue. Today we're 320 people across four legal entities in two countries, and our financial operations have not kept pace. Our month-end close takes 15 days. Our consolidation process is heavily manual. Revenue recognition for our enterprise contracts requires significant customization that's expensive to maintain.\n\nWe've hired Samantha Okafor as our CFO specifically to lead this transformation. Samantha's experience scaling finance operations at Shopify gives her a unique perspective on what good looks like at our stage. Her initial assessment confirmed what we suspected: we need fundamental changes to our financial technology stack, not just incremental improvements.\n\nThis doesn't mean we're planning a massive ERP migration -- those stories rarely end well. Instead, we're evaluating modern, AI-native financial platforms that can handle our complexity without the consultant-driven customization burden we've experienced. The goal is to get our close to 5 days, enable real-time financial visibility, and free our finance team to focus on strategic analysis rather than data wrangling.\n\nWe believe the next generation of finance tools will look very different from legacy ERPs, and we're eager to find partners on that journey."
+    },
+    {
+      "source_type": "job_posting",
+      "title": "Director of Financial Planning & Analysis",
+      "date": "2026-01-28",
+      "url": "https://brighthire.io/careers/director-fpa",
+      "text": "BrightHire is hiring a Director of FP&A to join our finance leadership team reporting to our CFO. This is a critical hire as we build the financial intelligence capability to support our growth from $45M to $100M+ ARR.\n\nWhat you'll do:\n- Build and own the company's financial planning, budgeting, and forecasting processes\n- Develop real-time dashboards and reporting for the executive team and board\n- Partner with department leaders on capacity planning, unit economics, and investment decisions\n- Evaluate and implement modern FP&A and financial reporting tools\n- Lead scenario modeling for international expansion and new product launches\n- Drive the transition from backward-looking reporting to forward-looking financial intelligence\n\nWhat we're looking for:\n- 8+ years of FP&A experience with at least 3 years at high-growth SaaS companies ($20M-$100M ARR)\n- Experience with multi-entity, multi-currency financial environments\n- Expertise in SaaS metrics and unit economics\n- Hands-on experience with NetSuite, Adaptive Planning, or modern alternatives\n- Strong opinions about the future of finance technology; experience evaluating and implementing new financial platforms is a significant plus\n- SQL proficiency required; Python or R is a bonus\n\nBrightHire is a 320-person company headquartered in New York City. This role is hybrid with 3 days per week in our Manhattan office."
+    },
+    {
+      "source_type": "press",
+      "title": "BrightHire Raises $62M Series C to Bring AI-Powered Recruiting to the Enterprise",
+      "date": "2025-09-06",
+      "url": "https://www.businessinsider.com/brighthire-series-c-62-million-2025-9",
+      "text": "BrightHire, the AI-powered recruiting platform, announced today it has raised $62 million in Series C funding led by Tiger Global. The New York-based company has grown to $45M in annual recurring revenue with 320 employees, serving over 500 enterprise customers including several Fortune 500 companies.\n\nCEO Eric Zhang said the funding will be used for enterprise product development, international expansion into Europe and APAC, and significant investment in operational infrastructure. 'We've reached the stage where operational excellence becomes a competitive advantage,' Zhang said. 'That means investing in finance, data, security, and compliance capabilities that match our product ambition.'\n\nThe company also announced the appointment of Samantha Okafor as CFO, bringing experience from Shopify's finance organization during its period of rapid growth."
+    },
+    {
+      "source_type": "blog",
+      "title": "Lessons from Scaling to 320 People",
+      "date": "2025-11-08",
+      "url": "https://brighthire.io/blog/scaling-to-320",
+      "text": "BrightHire crossed 320 employees last month, and I wanted to share some candid reflections on what changes as you scale through the 100-300 range.\n\nThe most surprising challenge wasn't hiring or product -- it was operational complexity. Every new entity, every new country, every new pricing model creates ripple effects across finance, legal, compliance, and data teams. We opened a UK entity for our European customers and suddenly our financial close process added three days.\n\nWe also learned that systems chosen for a 100-person company don't automatically scale to 300. Our financial systems in particular became a bottleneck. When your accounting team is spending more time fighting tools than analyzing data, something is fundamentally wrong. This is why we brought on a seasoned CFO and are making finance infrastructure a top priority for 2026.\n\nMy advice for founders at the 100-200 employee stage: invest in operational infrastructure before you think you need it. The cost of doing it reactively is 3-5x higher than doing it proactively."
+    }
+  ]
+}

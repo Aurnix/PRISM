@@ -1,0 +1,182 @@
+{
+  "slug": "velocitypay",
+  "company_name": "VelocityPay",
+  "domain": "velocitypay.com",
+  "blog_url": "https://velocitypay.com/blog",
+  "blog_rss": null,
+
+  "firmographics": {
+    "founded_year": 2021,
+    "headcount": 180,
+    "headcount_growth_12mo": 0.42,
+    "funding_stage": "Series B",
+    "total_raised": 58000000,
+    "last_round_amount": 38000000,
+    "last_round_date": "2025-08-22",
+    "last_round_lead": "Accel Partners",
+    "industry": "SaaS",
+    "hq_location": "San Francisco, CA",
+    "description": "B2B payments platform enabling SaaS companies to embed invoicing, billing, and payment collection directly into their products via API"
+  },
+
+  "tech_stack": {
+    "erp_accounting": "QuickBooks Online",
+    "crm": "HubSpot",
+    "payment_processor": "Stripe",
+    "cloud_provider": "AWS",
+    "primary_languages": ["TypeScript", "Go"],
+    "stack_maturity": "growing",
+    "migration_signals": [
+      "Job posting for Senior Accountant references NetSuite evaluation",
+      "VP Finance LinkedIn post mentions outgrowing current financial systems",
+      "Blog post discusses multi-entity complexity challenges"
+    ]
+  },
+
+  "contacts": [
+    {
+      "name": "Rachel Dominguez",
+      "title": "VP Finance",
+      "linkedin_url": "https://linkedin.com/in/racheldominguez",
+      "start_date_current_role": "2025-11-15",
+      "previous_company": "Stripe",
+      "previous_title": "Senior Controller",
+      "buying_role": "champion",
+      "linkedin_posts": [
+        {
+          "date": "2026-02-12",
+          "text": "Three months into my role at VelocityPay and the scaling challenges are real. When you grow 40%+ YoY, your month-end close process doesn't scale linearly -- it scales exponentially in complexity. We're processing thousands of B2B transactions daily and our current tooling just wasn't built for this volume. Excited to tackle this head-on."
+        },
+        {
+          "date": "2026-01-28",
+          "text": "Hot take: if your finance team is still spending 12+ days on month-end close, you're not just inefficient -- you're making strategic decisions on stale data. At Stripe, we had world-class financial infrastructure. Building that muscle at a growth-stage company is a completely different challenge. The gap between what leadership needs and what finance can deliver is where the real work happens."
+        },
+        {
+          "date": "2026-01-08",
+          "text": "Hiring for two senior roles on my finance team at VelocityPay. We're at the inflection point where manual processes become technical debt. If you're a finance professional who thinks in systems, not spreadsheets, let's talk. Especially interested in candidates who've navigated the Series B-to-C finance transformation."
+        },
+        {
+          "date": "2025-12-11",
+          "text": "Just wrapped my first month-end close at VelocityPay. The team is incredible but we're clearly outgrowing our tools. Multi-entity consolidation across three subsidiaries in QuickBooks is... an experience. Time to build the finance infrastructure that matches our product ambitions."
+        }
+      ]
+    },
+    {
+      "name": "David Aronov",
+      "title": "CEO & Co-Founder",
+      "linkedin_url": "https://linkedin.com/in/davidaronov",
+      "start_date_current_role": "2021-03-01",
+      "previous_company": "Plaid",
+      "previous_title": "Head of Payments Product",
+      "buying_role": "economic_buyer",
+      "linkedin_posts": [
+        {
+          "date": "2026-02-05",
+          "text": "Thrilled to share that VelocityPay processed over $2.1B in B2B payment volume in 2025 -- a 3.4x increase from 2024. Our platform now serves 340+ enterprise customers. The next chapter is about building the operational infrastructure to match our product momentum. That means investing heavily in finance, compliance, and data teams."
+        },
+        {
+          "date": "2025-12-18",
+          "text": "One of the hardest lessons at scale: your back-office operations need to be as excellent as your product. We hired Rachel Dominguez from Stripe to lead our finance org and she's already identified significant opportunities to modernize how we operate. The companies that win long-term are the ones that build strong financial foundations early."
+        }
+      ]
+    },
+    {
+      "name": "Marcus Chen",
+      "title": "CTO & Co-Founder",
+      "linkedin_url": "https://linkedin.com/in/marcuschen",
+      "start_date_current_role": "2021-03-01",
+      "previous_company": "Plaid",
+      "previous_title": "Staff Engineer",
+      "buying_role": "technical_gatekeeper",
+      "linkedin_posts": [
+        {
+          "date": "2026-01-22",
+          "text": "Our engineering team spent a surprising amount of Q4 building internal tooling for the finance team -- revenue recognition scripts, reconciliation dashboards, entity mapping logic. This is classic build-vs-buy territory and honestly, we should be buying. Our engineers should be working on payment infrastructure, not accounting automation. Looking at options."
+        },
+        {
+          "date": "2025-10-30",
+          "text": "The hidden cost of rapid growth: every new entity, every new payment method, every new geography creates exponential complexity in your financial operations. We've built incredible payment APIs but our own internal financial systems are held together with duct tape. Ironic? Maybe. But it's the reality for most Series B companies."
+        }
+      ]
+    },
+    {
+      "name": "Priya Nair",
+      "title": "Staff Accountant",
+      "linkedin_url": "https://linkedin.com/in/priyanair-finance",
+      "start_date_current_role": "2025-04-10",
+      "previous_company": "Brex",
+      "previous_title": "Senior Accounting Associate",
+      "buying_role": "user",
+      "linkedin_posts": [
+        {
+          "date": "2026-01-15",
+          "text": "If anyone has recommendations for ASC 606 revenue recognition tools that integrate with QuickBooks, I'm all ears. Managing rev rec manually across 340+ enterprise contracts with varying payment terms is becoming unsustainable. The spreadsheet I inherited has 47 tabs. Forty. Seven."
+        }
+      ]
+    }
+  ],
+
+  "signals": [
+    {
+      "signal_type": "funding_round",
+      "description": "$38M Series B led by Accel Partners, with participation from Ribbit Capital and existing investor Founders Fund",
+      "source": "Crunchbase",
+      "detected_date": "2025-08-22"
+    },
+    {
+      "signal_type": "new_executive_finance",
+      "description": "Rachel Dominguez hired as VP Finance, previously Senior Controller at Stripe",
+      "source": "LinkedIn",
+      "detected_date": "2025-11-15"
+    },
+    {
+      "signal_type": "job_posting_finance",
+      "description": "Hiring Senior Accountant with NetSuite experience preferred; posting mentions multi-entity consolidation and ASC 606 compliance",
+      "source": "LinkedIn Jobs",
+      "detected_date": "2026-01-10"
+    },
+    {
+      "signal_type": "migration_signal",
+      "description": "CTO LinkedIn post explicitly mentions evaluating alternatives to internal financial tooling; VP Finance references outgrowing current systems",
+      "source": "LinkedIn",
+      "detected_date": "2026-01-22"
+    },
+    {
+      "signal_type": "blog_post_pain",
+      "description": "Company blog post titled 'Scaling Financial Operations at 3x Growth' details month-end close challenges and multi-entity complexity",
+      "source": "Company Blog",
+      "detected_date": "2026-01-18"
+    }
+  ],
+
+  "additional_content": [
+    {
+      "source_type": "blog",
+      "title": "Scaling Financial Operations at 3x Growth",
+      "date": "2026-01-18",
+      "url": "https://velocitypay.com/blog/scaling-financial-operations",
+      "text": "When we closed our Series B last August, we knew the next phase of VelocityPay's growth would demand more than just product innovation. Processing $2.1B in B2B payment volume across 340+ enterprise customers means our financial operations need to match the sophistication of our platform.\n\nThe reality is that most Series B companies face a critical inflection point in their finance function. What worked at 50 employees and $200M in processing volume simply breaks at 180 employees and $2B+. Our month-end close, which used to take 5 days, now stretches to 14. Our revenue recognition process, governed by ASC 606, has become a manual reconciliation nightmare as contract structures have grown more complex.\n\nWe now operate three legal entities across two jurisdictions. Consolidation requires our accounting team to manually map intercompany transactions, eliminate entries, and reconcile currency differences -- all in spreadsheets that reference our QuickBooks data. It's error-prone, time-consuming, and fundamentally unscalable.\n\nThis quarter, we're making significant investments in our finance infrastructure. We've brought on Rachel Dominguez, formerly of Stripe, to lead our finance organization. Rachel is evaluating our entire financial technology stack with fresh eyes, and we expect to make meaningful changes in Q1 2026.\n\nThe companies that build robust financial infrastructure early are the ones that can move fastest later. We're building VelocityPay to be a generational company, and that means our internal operations need to be as excellent as the products we ship to customers."
+    },
+    {
+      "source_type": "job_posting",
+      "title": "Senior Accountant - Revenue & Consolidation",
+      "date": "2026-01-10",
+      "url": "https://velocitypay.com/careers/senior-accountant",
+      "text": "VelocityPay is looking for a Senior Accountant to join our growing finance team reporting to our VP Finance. You'll play a critical role in transforming our financial operations as we scale from $2B to $10B+ in annual payment volume.\n\nResponsibilities:\n- Own the month-end close process across three legal entities\n- Manage ASC 606 revenue recognition for 340+ enterprise contracts with varying payment terms, usage-based components, and multi-year commitments\n- Lead multi-entity consolidation and intercompany eliminations\n- Collaborate with engineering to improve financial data pipelines and reduce manual reconciliation\n- Evaluate and implement accounting automation tools (NetSuite, Rillet, or similar platforms)\n- Build scalable processes that can support 10x volume growth\n\nRequirements:\n- 4-6 years in accounting at high-growth SaaS or fintech companies\n- Deep experience with ASC 606 revenue recognition\n- Multi-entity consolidation experience required\n- Experience with QuickBooks Online and ideally NetSuite or modern accounting platforms\n- CPA preferred\n- Comfort with ambiguity and building processes from scratch\n\nWhy VelocityPay: You'll be joining at the exact moment where our finance function is transforming from startup-mode to scale-mode. If you want to build the finance infrastructure for a company processing billions in B2B payments, this is the role."
+    },
+    {
+      "source_type": "press",
+      "title": "VelocityPay Raises $38M Series B to Scale B2B Payments Platform",
+      "date": "2025-08-23",
+      "url": "https://techcrunch.com/2025/08/23/velocitypay-series-b",
+      "text": "VelocityPay, the B2B payments platform that enables SaaS companies to embed invoicing and payment collection into their products, has raised $38 million in Series B funding led by Accel Partners. The round brings VelocityPay's total funding to $58 million.\n\nThe San Francisco-based company, founded in 2021 by former Plaid executives David Aronov and Marcus Chen, has grown its customer base to over 340 enterprise clients and processed more than $2 billion in payment volume in 2025. The company plans to use the funding to expand its platform capabilities, grow its team from 130 to over 200 employees, and invest in operational infrastructure.\n\n'We're at an exciting inflection point,' said CEO David Aronov. 'Our product has proven strong market fit, and now we need to build the internal infrastructure -- finance, compliance, data -- to support the next phase of growth.'"
+    },
+    {
+      "source_type": "blog",
+      "title": "Why We're Investing in Our Back Office",
+      "date": "2025-12-05",
+      "url": "https://velocitypay.com/blog/investing-in-back-office",
+      "text": "There's a common pattern in venture-backed startups: invest everything in product and sales, treat operations as an afterthought, and then scramble to catch up when complexity overwhelms your manual processes. We've been guilty of this at VelocityPay, and we're changing course.\n\nAs a payments company, we process enormous transaction volumes. Each transaction creates accounting entries, triggers revenue recognition events, and generates reconciliation requirements. When we were processing $50M per month, our team of two accountants could handle this with QuickBooks and some well-structured spreadsheets. At $175M per month and growing, that approach has become our biggest operational bottleneck.\n\nOur finance team spends roughly 60% of their time on manual data entry, reconciliation, and consolidation work. That's time they could be spending on strategic analysis, forecasting, and business partnering. We owe it to our team and our investors to fix this.\n\nThe truth is, we've built world-class APIs for our customers' payment operations, but our own financial operations are running on technology that doesn't match our scale. In 2026, we're committed to closing this gap."
+    }
+  ]
+}

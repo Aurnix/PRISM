@@ -1,0 +1,35 @@
+{
+  "slug": "template",
+  "company_name": "Company Name",
+  "domain": "example.com",
+  "blog_url": "https://example.com/blog",
+  "blog_rss": null,
+
+  "firmographics": {
+    "founded_year": 2020,
+    "headcount": 150,
+    "headcount_growth_12mo": 0.30,
+    "funding_stage": "Series B",
+    "total_raised": 40000000,
+    "last_round_amount": 25000000,
+    "last_round_date": "2025-09-15",
+    "last_round_lead": "Investor Name",
+    "industry": "SaaS",
+    "hq_location": "San Francisco, CA",
+    "description": "Brief company description"
+  },
+
+  "tech_stack": {
+    "erp_accounting": "QuickBooks Online",
+    "crm": "HubSpot",
+    "payment_processor": "Stripe",
+    "cloud_provider": "AWS",
+    "primary_languages": ["TypeScript", "Python"],
+    "stack_maturity": "early",
+    "migration_signals": []
+  },
+
+  "contacts": [],
+  "signals": [],
+  "additional_content": []
+}
