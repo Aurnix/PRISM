@@ -10,6 +10,7 @@ from prism.models.analysis import (
     ConfidenceAssessment,
     ContentIntelligenceSummary,
     PersonAnalysis,
+    ScoreBreakdown,
     Stage1Extraction,
     Stage2Synthesis,
 )
@@ -32,6 +33,7 @@ __all__ = [
     "ConfidenceAssessment",
     "ContentIntelligenceSummary",
     "PersonAnalysis",
+    "ScoreBreakdown",
     "Stage1Extraction",
     "Stage2Synthesis",
     "Play",

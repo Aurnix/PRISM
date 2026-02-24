@@ -198,7 +198,7 @@ async def _analyze_company(
 ) -> None:
     """Full analysis pipeline for a single company."""
     from prism.analysis.content_intel import ContentIntelligenceChain
-    from prism.analysis.scoring import score_account
+    from prism.analysis.scoring import lookup_play_fallback, score_account
     from prism.analysis.signal_decay import calculate_decay_weight
     from prism.data.loader import (
         load_account,
@@ -397,31 +397,6 @@ async def _analyze_company(
     if corpus.total_items < 5 or not corpus.meets_minimum:
         confidence.overall_confidence = "low"
 
-    # Build play
-    play = Play(
-        play_name=play_data.get("play_name", ""),
-        description=play_data.get("description", ""),
-        sequence=play_data.get("sequence", []),
-        timeline=play_data.get("timeline", ""),
-        entry_point=play_data.get("entry_point"),
-        fallback_play=play_data.get("fallback_play"),
-    )
-
-    # Generate angles if we have person analyses and LLM
-    if not no_llm and person_analyses and stage2_result:
-        llm = LLMService()
-        chain = ContentIntelligenceChain(llm)
-        angles = await chain.generate_angles(
-            account=account,
-            person_analyses=person_analyses,
-            why_now_headline=why_now.headline,
-            pain_themes=ci_summary.primary_pain_themes if ci_summary else [],
-            stress_level=ci_summary.org_stress_level if ci_summary else "unknown",
-            play=play,
-        )
-        play.angles = angles
-        console.print(f"[dim]Angle generation: {llm.usage.summary()}[/dim]")
-
     # Determine journey position from stage 2
     journey_position = 0.0
     journey_label = "status_quo"
@@ -449,8 +424,61 @@ async def _analyze_company(
         elif urgency_trend == "decreasing":
             journey_velocity = "stalling"
 
-    # Build analyzed account
-    llm_service = LLMService() if not no_llm else None
+    # Build play — use LLM output if available, otherwise rules-based fallback
+    if play_data and play_data.get("play_name"):
+        play = Play(
+            play_name=play_data.get("play_name", ""),
+            description=play_data.get("description", ""),
+            sequence=play_data.get("sequence", []),
+            timeline=play_data.get("timeline", ""),
+            entry_point=play_data.get("entry_point"),
+            fallback_play=play_data.get("fallback_play"),
+        )
+    else:
+        # Derive stress level from synthesis or default
+        stress_level = "low"
+        if stage2_result:
+            stress_level = stage2_result.stress_indicators.get("level", "low")
+
+        fb = lookup_play_fallback(
+            journey_label=journey_label,
+            stress_level=stress_level,
+            tech_stack_erp=account.tech_stack.erp_accounting,
+        )
+
+        # Pick entry point from champion or first contact
+        entry_contact = None
+        for c in contacts:
+            if c.buying_role == "champion":
+                entry_contact = f"{c.name} ({c.title})"
+                break
+        if not entry_contact and contacts:
+            entry_contact = f"{contacts[0].name} ({contacts[0].title})"
+
+        play = Play(
+            play_name=fb["play"],
+            description=fb["description"],
+            sequence=fb["sequence"],
+            timeline=fb["timeline"],
+            entry_point=entry_contact,
+            fallback_play="Standard nurture sequence",
+        )
+
+    # Generate angles if we have person analyses and LLM
+    if not no_llm and person_analyses and stage2_result:
+        angles = await chain.generate_angles(
+            account=account,
+            person_analyses=person_analyses,
+            why_now_headline=why_now.headline,
+            pain_themes=ci_summary.primary_pain_themes if ci_summary else [],
+            stress_level=ci_summary.org_stress_level if ci_summary else "unknown",
+            play=play,
+        )
+        play.angles = angles
+        console.print(f"[dim]Angle generation: {llm.usage.summary()}[/dim]")
+
+    # Build analyzed account — reuse the LLMService that actually made calls
+    llm_ref = llm if (not no_llm and corpus.total_items > 0) else None
     analyzed = AnalyzedAccount(
         account_slug=slug,
         company_name=account.company_name,
@@ -467,10 +495,10 @@ async def _analyze_company(
         person_analyses=person_analyses,
         confidence=confidence,
         signals=signals,
-        total_input_tokens=llm_service.usage.total_input_tokens if llm_service else 0,
-        total_output_tokens=llm_service.usage.total_output_tokens if llm_service else 0,
-        total_api_calls=llm_service.usage.total_calls if llm_service else 0,
-        estimated_cost_usd=llm_service.usage.estimated_cost if llm_service else 0.0,
+        total_input_tokens=llm_ref.usage.total_input_tokens if llm_ref else 0,
+        total_output_tokens=llm_ref.usage.total_output_tokens if llm_ref else 0,
+        total_api_calls=llm_ref.usage.total_calls if llm_ref else 0,
+        estimated_cost_usd=llm_ref.usage.estimated_cost if llm_ref else 0.0,
         limited_analysis=corpus.total_items == 0 or no_llm,
         limited_analysis_reason=(
             "No public content corpus" if corpus.total_items == 0

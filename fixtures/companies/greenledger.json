@@ -12,7 +12,7 @@
     "funding_stage": "Series A",
     "total_raised": 12000000,
     "last_round_amount": 9000000,
-    "last_round_date": "2025-09-20",
+    "last_round_date": "2025-10-02",
     "last_round_lead": "Breakthrough Energy Ventures",
     "industry": "SaaS",
     "hq_location": "Denver, CO",
@@ -34,17 +34,17 @@
       "name": "Diana Martinez",
       "title": "VP Finance & Operations",
       "linkedin_url": "https://linkedin.com/in/dianamartinez-gl",
-      "start_date_current_role": "2025-08-01",
+      "start_date_current_role": "2025-08-13",
       "previous_company": "Watershed",
       "previous_title": "Finance Manager",
       "buying_role": "champion",
       "linkedin_posts": [
         {
-          "date": "2026-01-25",
+          "date": "2026-02-06",
           "text": "Climate tech is one of the most exciting spaces in venture right now. At GreenLedger, we help companies track and report their carbon footprint. The growth since our Series A has been incredible — 45 people and counting. Now I need to make sure our own financial reporting keeps pace. QuickBooks works for now, but I can see the limitations on the horizon."
         },
         {
-          "date": "2025-11-15",
+          "date": "2025-11-27",
           "text": "One thing I love about being VP Finance at a smaller startup: you get to build everything from scratch. One thing I don't love: you have to build everything from scratch. Currently evaluating whether to invest in proper financial infrastructure now or wait until we're bigger. The classic startup finance dilemma."
         }
       ]
@@ -53,11 +53,11 @@
       "name": "Ryan O'Brien",
       "title": "CEO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/ryanobrien-gl",
-      "start_date_current_role": "2023-02-01",
+      "start_date_current_role": "2023-02-13",
       "buying_role": "economic_buyer",
       "linkedin_posts": [
         {
-          "date": "2026-02-10",
+          "date": "2026-02-22",
           "text": "SEC climate disclosure rules are driving massive demand for carbon accounting. GreenLedger is growing 30% quarter-over-quarter. Just crossed 150 customers. Our platform automates what used to take sustainability consultants months of spreadsheet work. Grateful for our team and investors who believe in this mission."
         }
       ]
@@ -69,19 +69,19 @@
       "signal_type": "funding_round",
       "description": "$9M Series A led by Breakthrough Energy Ventures",
       "source": "Crunchbase",
-      "detected_date": "2025-09-20"
+      "detected_date": "2025-10-02"
     },
     {
       "signal_type": "new_executive_finance",
       "description": "VP Finance & Operations hired from Watershed — first dedicated finance leader",
       "source": "LinkedIn",
-      "detected_date": "2025-08-01"
+      "detected_date": "2025-08-13"
     },
     {
       "signal_type": "job_posting_finance",
       "description": "Staff Accountant posting — first accounting hire, mentions QuickBooks",
       "source": "LinkedIn Jobs",
-      "detected_date": "2026-01-30"
+      "detected_date": "2026-02-11"
     }
   ],
 
@@ -89,14 +89,14 @@
     {
       "source_type": "blog",
       "title": "GreenLedger Series A: Building the Future of Carbon Accounting",
-      "date": "2025-09-22",
+      "date": "2025-10-04",
       "url": "https://greenledger.io/blog/series-a-announcement",
       "text": "We're thrilled to announce GreenLedger's $9M Series A led by Breakthrough Energy Ventures. When Ryan and I started GreenLedger in 2023, we saw a clear gap: thousands of mid-market companies were about to need carbon accounting capabilities, but the tools available were built for either Fortune 500 companies or tiny startups doing manual spreadsheet tracking. There was nothing in between. Our platform automates Scope 1, 2, and 3 emissions tracking, integrates with popular accounting and ERP systems, and generates audit-ready ESG reports. We've grown to 45 employees and 150 customers since launch, and this funding will help us scale the team, expand our integration library, and invest in the operational infrastructure we need to support our growth trajectory."
     },
     {
       "source_type": "job_posting",
       "title": "Staff Accountant",
-      "date": "2026-01-30",
+      "date": "2026-02-11",
       "url": "https://greenledger.io/careers/staff-accountant",
       "text": "GreenLedger is hiring a Staff Accountant to join our finance team. You'll support month-end close, manage accounts payable and receivable, and help maintain our QuickBooks Online accounting system. This is a great opportunity for someone early in their accounting career who wants to grow with a fast-moving climate tech startup. Requirements: 1-3 years accounting experience, familiarity with QuickBooks, basic Excel skills. CPA track preferred. Bonus: interest in climate tech and sustainability."
     }

@@ -12,7 +12,7 @@
     "funding_stage": "Series B",
     "total_raised": 47000000,
     "last_round_amount": 32000000,
-    "last_round_date": "2025-10-18",
+    "last_round_date": "2025-11-01",
     "last_round_lead": "Andreessen Horowitz",
     "industry": "SaaS",
     "hq_location": "Seattle, WA",
@@ -38,21 +38,21 @@
       "name": "Derek Yamamoto",
       "title": "VP Finance",
       "linkedin_url": "https://linkedin.com/in/derekyamamoto",
-      "start_date_current_role": "2025-09-15",
+      "start_date_current_role": "2025-09-29",
       "previous_company": "Snowflake",
       "previous_title": "Director of Revenue Accounting",
       "buying_role": "champion",
       "linkedin_posts": [
         {
-          "date": "2026-02-08",
+          "date": "2026-02-22",
           "text": "Revenue recognition at a usage-based analytics company is a special kind of puzzle. Our customers have annual contracts with committed minimums plus overage charges, and some are transitioning to consumption-only pricing. Managing this in Xero with spreadsheet overlays is becoming untenable. We need purpose-built automation for this or we'll be adding headcount just to keep up with the complexity."
         },
         {
-          "date": "2026-01-12",
+          "date": "2026-01-26",
           "text": "Four months in at DataCanvas and I've completed my assessment of our financial operations. The good news: incredibly talented team, strong revenue trajectory, clean audit last year. The challenge: our financial infrastructure was designed for a $5M ARR company and we're approaching $25M. The gap is widest in rev rec, consolidation, and real-time reporting. Time to modernize."
         },
         {
-          "date": "2025-11-22",
+          "date": "2025-12-06",
           "text": "Excited to have joined DataCanvas as VP Finance. Coming from Snowflake where I saw firsthand what happens when usage-based pricing meets accounting complexity at scale, I know how important it is to build the right financial infrastructure early. Looking forward to helping this incredible team build the operational foundation for the next phase of growth."
         }
       ]
@@ -61,13 +61,13 @@
       "name": "Natasha Volkov",
       "title": "CEO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/natashavolkov",
-      "start_date_current_role": "2021-06-01",
+      "start_date_current_role": "2021-06-15",
       "previous_company": "Tableau",
       "previous_title": "Group Product Manager",
       "buying_role": "economic_buyer",
       "linkedin_posts": [
         {
-          "date": "2026-01-20",
+          "date": "2026-02-03",
           "text": "DataCanvas crossed $22M ARR in Q4 2025. We're growing 36% year-over-year and our enterprise pipeline has never been stronger. With our Series B behind us, we're investing in the foundation to scale to $50M+. That means building out our finance, legal, and people teams to match the sophistication of our product organization."
         }
       ]
@@ -76,13 +76,13 @@
       "name": "Ray Gutierrez",
       "title": "CTO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/raygutierrez-tech",
-      "start_date_current_role": "2021-06-01",
+      "start_date_current_role": "2021-06-15",
       "previous_company": "Tableau",
       "previous_title": "Principal Engineer",
       "buying_role": "technical_gatekeeper",
       "linkedin_posts": [
         {
-          "date": "2025-12-15",
+          "date": "2025-12-29",
           "text": "Something that doesn't get discussed enough in startup engineering: the operational systems tax. At DataCanvas we have two engineers spending roughly 30% of their time maintaining financial data pipelines -- Stripe to Xero sync, usage metering reconciliation, revenue calculations. These are smart, expensive engineers doing work that should be automated by purpose-built tools. We need to fix this in 2026."
         }
       ]
@@ -94,25 +94,25 @@
       "signal_type": "funding_round",
       "description": "$32M Series B led by Andreessen Horowitz with participation from Madrona Venture Group",
       "source": "Crunchbase",
-      "detected_date": "2025-10-18"
+      "detected_date": "2025-11-01"
     },
     {
       "signal_type": "new_executive_finance",
       "description": "Derek Yamamoto hired as VP Finance, previously Director of Revenue Accounting at Snowflake",
       "source": "LinkedIn",
-      "detected_date": "2025-09-15"
+      "detected_date": "2025-09-29"
     },
     {
       "signal_type": "migration_signal",
       "description": "VP Finance LinkedIn post explicitly states Xero with spreadsheet overlays is becoming untenable; CTO notes engineering time wasted on financial data pipelines",
       "source": "LinkedIn",
-      "detected_date": "2026-02-08"
+      "detected_date": "2026-02-22"
     },
     {
       "signal_type": "blog_post_pain",
       "description": "Company blog post details revenue recognition complexity with usage-based pricing model and need for financial infrastructure modernization",
       "source": "Company Blog",
-      "detected_date": "2025-12-20"
+      "detected_date": "2026-01-03"
     }
   ],
 
@@ -120,21 +120,21 @@
     {
       "source_type": "blog",
       "title": "The Hidden Complexity of Usage-Based Pricing",
-      "date": "2025-12-20",
+      "date": "2026-01-03",
       "url": "https://datacanvas.ai/blog/usage-based-pricing-complexity",
       "text": "DataCanvas runs a hybrid pricing model: annual commitments with minimum spend guarantees plus usage-based overage charges. It's great for customers because they get predictability with flexibility. It's a revenue recognition nightmare.\n\nEvery month, our finance team has to reconcile usage data from our metering system against Stripe billing events, calculate overage charges across 180+ enterprise accounts with different pricing tiers and contract terms, recognize revenue in compliance with ASC 606, and consolidate across two legal entities.\n\nToday this process involves exporting data from four different systems into a master spreadsheet, running a series of manual calculations, and entering journal entries into Xero. It takes our team of three approximately 8 full days each month. That's 40% of their available time spent on a process that should be largely automated.\n\nAs we grow past $25M ARR and our customer base expands, this problem doesn't scale linearly -- it compounds. Each new pricing tier, each new contract structure, each new enterprise customer adds complexity to an already strained process.\n\nWe recently brought on Derek Yamamoto as VP Finance. Derek comes from Snowflake, where he helped build revenue accounting processes for a usage-based business at massive scale. His mandate is clear: build the financial infrastructure that can support DataCanvas at $100M ARR, not just $25M.\n\nWe'll share more about our finance transformation journey in the coming months. If you're a SaaS company wrestling with similar challenges, we'd love to hear how you're solving them."
     },
     {
       "source_type": "job_posting",
       "title": "Senior Revenue Accountant",
-      "date": "2026-01-15",
+      "date": "2026-01-29",
       "url": "https://datacanvas.ai/careers/senior-revenue-accountant",
       "text": "DataCanvas is hiring a Senior Revenue Accountant to join our finance team. You'll be instrumental in building scalable revenue recognition processes for our usage-based analytics platform.\n\nResponsibilities:\n- Own ASC 606 revenue recognition across 180+ enterprise contracts with hybrid pricing models\n- Manage usage-based revenue calculations, overage billing, and committed minimum true-ups\n- Perform monthly revenue reconciliation between metering, billing, and accounting systems\n- Support multi-entity consolidation and intercompany transactions\n- Collaborate with the VP Finance to evaluate and implement modern revenue automation tools (experience with Rillet, Puzzle, or similar platforms is a strong plus)\n- Prepare audit-ready revenue documentation\n\nRequirements:\n- 3-5 years of revenue accounting experience at SaaS companies, preferably with usage-based pricing models\n- Deep ASC 606 expertise\n- Experience with Xero or QuickBooks; NetSuite or modern accounting platform experience preferred\n- CPA or CPA-track\n- Strong analytical skills and attention to detail\n- Comfort working in a fast-paced, high-growth environment"
     },
     {
       "source_type": "press",
       "title": "DataCanvas Raises $32M Series B to Democratize Data Analytics",
-      "date": "2025-10-19",
+      "date": "2025-11-02",
       "url": "https://www.geekwire.com/2025/datacanvas-series-b-32m",
       "text": "Seattle-based DataCanvas announced a $32 million Series B round led by Andreessen Horowitz, bringing its total funding to $47 million. The AI-powered analytics platform, which enables non-technical users to build dashboards and run complex queries using natural language, has grown to $22M ARR with 150 employees.\n\nCo-founder and CEO Natasha Volkov said the company plans to expand its enterprise sales team, invest in AI model development, and build operational infrastructure to support the next phase of growth. 'We've proven our product works. Now we need to build a company that can scale to $100M and beyond,' said Volkov. The company also announced the hire of Derek Yamamoto from Snowflake as VP Finance to lead the build-out of the company's financial operations."
     }

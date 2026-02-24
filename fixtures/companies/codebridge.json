@@ -12,7 +12,7 @@
     "funding_stage": "Series A",
     "total_raised": 18000000,
     "last_round_amount": 14000000,
-    "last_round_date": "2025-09-28",
+    "last_round_date": "2025-10-08",
     "last_round_lead": "Accel",
     "industry": "SaaS",
     "hq_location": "San Francisco, CA",
@@ -37,17 +37,17 @@
       "name": "Jennifer Morales",
       "title": "CFO",
       "linkedin_url": "https://linkedin.com/in/jennifermorales-cfo",
-      "start_date_current_role": "2025-12-01",
+      "start_date_current_role": "2025-12-11",
       "previous_company": "Plaid",
       "previous_title": "VP Finance",
       "buying_role": "champion",
       "linkedin_posts": [
         {
-          "date": "2026-02-12",
+          "date": "2026-02-22",
           "text": "Three months in as CFO at CodeBridge and the pattern is familiar: incredible product, incredible growth, and finance infrastructure that's about two stages behind where it needs to be. My first 90-day priority is getting our accounting and reporting foundation right. You can't make strategic decisions with stale data."
         },
         {
-          "date": "2026-01-05",
+          "date": "2026-01-15",
           "text": "Excited to start the new year as CFO at CodeBridge! After six years in finance leadership at Plaid, I'm energized to bring that scaling playbook to a company at an earlier inflection point. The API economy is just getting started and CodeBridge is uniquely positioned."
         }
       ]
@@ -56,17 +56,17 @@
       "name": "Ryan Park",
       "title": "CEO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/ryanpark-codebridge",
-      "start_date_current_role": "2022-06-01",
+      "start_date_current_role": "2022-06-11",
       "previous_company": "Stripe",
       "previous_title": "Staff Engineer",
       "buying_role": "economic_buyer",
       "linkedin_posts": [
         {
-          "date": "2026-01-20",
+          "date": "2026-01-30",
           "text": "One of the best decisions we made in Q4 was bringing on Jennifer Morales as our first CFO. When you're growing 55% year-over-year, you need someone who's seen the scaling playbook before. She's already identified three areas where better financial infrastructure will unlock faster decision-making."
         },
         {
-          "date": "2025-10-08",
+          "date": "2025-10-18",
           "text": "CodeBridge just crossed $8M ARR. A year ago we were at $5M. The developer tools market is accelerating and our unified API approach is resonating. Now the challenge shifts: how do you build the operational backbone to support this trajectory without slowing down the product org?"
         }
       ]
@@ -75,13 +75,13 @@
       "name": "Aaliyah Thompson",
       "title": "CTO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/aaliyahthompson",
-      "start_date_current_role": "2022-06-01",
+      "start_date_current_role": "2022-06-11",
       "previous_company": "Twilio",
       "previous_title": "Engineering Manager",
       "buying_role": "technical_gatekeeper",
       "linkedin_posts": [
         {
-          "date": "2025-11-18",
+          "date": "2025-11-28",
           "text": "Hot take: the biggest technical debt at most startups isn't in the product codebase -- it's in the internal tools and processes. We've been guilty of this at CodeBridge. Building world-class APIs for customers while our internal systems are held together with Zapier automations and prayer."
         }
       ]
@@ -93,25 +93,25 @@
       "signal_type": "funding_round",
       "description": "$14M Series A led by Accel",
       "source": "Crunchbase",
-      "detected_date": "2025-09-28"
+      "detected_date": "2025-10-08"
     },
     {
       "signal_type": "new_executive_finance",
       "description": "First CFO hire -- Jennifer Morales from Plaid",
       "source": "LinkedIn",
-      "detected_date": "2025-12-01"
+      "detected_date": "2025-12-11"
     },
     {
       "signal_type": "job_posting_finance",
       "description": "Hiring Finance Manager to support new CFO and implement accounting systems",
       "source": "LinkedIn Jobs",
-      "detected_date": "2026-02-05"
+      "detected_date": "2026-02-15"
     },
     {
       "signal_type": "migration_signal",
       "description": "New CFO LinkedIn post references finance infrastructure being two stages behind",
       "source": "LinkedIn",
-      "detected_date": "2026-02-12"
+      "detected_date": "2026-02-22"
     }
   ],
 
@@ -119,21 +119,21 @@
     {
       "source_type": "blog",
       "title": "From $5M to $8M ARR: What We Learned Scaling CodeBridge in 2025",
-      "date": "2026-01-15",
+      "date": "2026-01-25",
       "url": "https://codebridge.dev/blog/scaling-2025-retrospective",
       "text": "2025 was a transformative year for CodeBridge. We grew from $5M to $8M in ARR, expanded our team from 42 to 65 people, and closed our Series A with Accel leading the round.\n\nBut growth at this pace exposes every weakness in your operational foundation. Some things we got right: our engineering culture scaled well, our product-led growth motion continued to compound, and our customer retention remained best-in-class at 97% net revenue retention.\n\nSome things we got wrong: we underinvested in back-office infrastructure. Our finance team of two was running on Xero, spreadsheets, and heroic effort. Revenue recognition for our usage-based pricing was a manual nightmare that consumed the first two weeks of every month. We didn't have real-time visibility into our unit economics at the customer level.\n\nThe honest truth is that we were so focused on product and GTM that we treated finance as an afterthought. That changes in 2026. With Jennifer joining as our first CFO, we're committing to building the financial infrastructure that matches our growth trajectory.\n\nOur priorities for Q1 2026: implement a proper accounting system that can handle our pricing complexity, build automated revenue recognition workflows, and create a real-time financial dashboard that our leadership team can actually use for decision-making.\n\nIf you're a startup founder reading this: don't wait until you're at $8M ARR to invest in finance. Start earlier than you think you need to."
     },
     {
       "source_type": "job_posting",
       "title": "Finance Manager",
-      "date": "2026-02-05",
+      "date": "2026-02-15",
       "url": "https://codebridge.dev/careers/finance-manager",
       "text": "CodeBridge is hiring our first Finance Manager to work alongside our new CFO in building a world-class finance function from the ground up. This is a foundational role -- you'll be instrumental in selecting and implementing our next-generation accounting platform, building financial processes, and establishing the reporting infrastructure for a company growing 55%+ annually.\n\nWhat you'll do:\n- Lead the evaluation and implementation of a new accounting system (replacing Xero)\n- Build month-end close processes targeting sub-7-day close\n- Implement ASC 606 revenue recognition for usage-based SaaS pricing\n- Create and maintain financial models and board reporting packages\n- Manage AP/AR and support annual audit preparation\n\nWhat we're looking for:\n- 4-6 years of accounting/finance experience in high-growth SaaS\n- Experience implementing or migrating accounting systems\n- Strong understanding of usage-based and hybrid SaaS pricing models\n- CPA preferred\n- Comfort with ambiguity and building processes from scratch\n\nCodeBridge is a Series A company backed by Accel, growing 55% year-over-year. Our API integration platform serves over 2,000 developers and we're just getting started."
     },
     {
       "source_type": "press",
       "title": "CodeBridge Raises $14M Series A to Simplify API Integrations for Developers",
-      "date": "2025-10-01",
+      "date": "2025-10-11",
       "url": "https://techcrunch.com/2025/10/01/codebridge-series-a",
       "text": "CodeBridge, the San Francisco-based API integration platform, announced a $14 million Series A led by Accel. The round also included participation from Y Combinator and a group of angel investors including former Stripe and Twilio executives.\n\nThe company's universal API layer allows developers to integrate with hundreds of SaaS applications through a single interface, dramatically reducing integration development time. CodeBridge has grown to over 2,000 active developer customers and $8M in ARR since launching in 2023.\n\nCEO Ryan Park said the funding will be used to expand the platform's connector library, invest in enterprise features, and -- notably -- build out the company's operational infrastructure. 'We've been running lean on the operations side,' Park said. 'This funding lets us hire the finance and ops leaders who will build the foundation for the next stage.'"
     }

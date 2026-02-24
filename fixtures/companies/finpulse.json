@@ -12,7 +12,7 @@
     "funding_stage": "Series B",
     "total_raised": 68000000,
     "last_round_amount": 48000000,
-    "last_round_date": "2025-10-15",
+    "last_round_date": "2025-10-22",
     "last_round_lead": "Sequoia Capital",
     "industry": "Fintech",
     "hq_location": "New York, NY",
@@ -39,25 +39,25 @@
       "name": "Michael Torres",
       "title": "VP Finance",
       "linkedin_url": "https://linkedin.com/in/michaeltorres-finance",
-      "start_date_current_role": "2025-07-15",
+      "start_date_current_role": "2025-07-22",
       "previous_company": "Brex",
       "previous_title": "Director of Accounting",
       "buying_role": "champion",
       "linkedin_posts": [
         {
-          "date": "2026-02-15",
+          "date": "2026-02-22",
           "text": "Unpopular opinion: most fintech companies are terrible at managing their own finances. We build sophisticated financial products for our customers while our internal finance stack is held together with QuickBooks and duct tape. At FinPulse, I'm determined to change this. We're evaluating modern accounting platforms that can handle our complexity -- multi-entity, real-time reporting, ASC 606 automation. The irony of a financial data company struggling with its own financial data is not lost on me."
         },
         {
-          "date": "2026-01-08",
+          "date": "2026-01-15",
           "text": "Just closed our first month-end as a multi-entity company (FinPulse US + FinPulse UK). It took 22 business days. Twenty-two. I've run month-end closes at Brex where we had 10x the transaction volume and closed in 6 days. The difference? Infrastructure. QuickBooks was the right tool when we were 30 people. At 240 with international operations, it's actively hurting us."
         },
         {
-          "date": "2025-10-28",
+          "date": "2025-11-04",
           "text": "Thrilled that FinPulse closed our $48M Series B led by Sequoia. One of my top priorities with this funding: building a finance function that can support a company on the path to $100M ARR. That means new systems, new processes, and a team that can scale with the business."
         },
         {
-          "date": "2025-09-05",
+          "date": "2025-09-12",
           "text": "Month-end close at a high-growth fintech is like trying to change a tire on a moving car. Revenue recognition for our platform fees, data subscriptions, and professional services each follow different rules. We're manually calculating ASC 606 allocations in spreadsheets. There has to be a better way."
         }
       ]
@@ -66,17 +66,17 @@
       "name": "Lisa Chang",
       "title": "CEO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/lisachang-finpulse",
-      "start_date_current_role": "2020-05-01",
+      "start_date_current_role": "2020-05-08",
       "previous_company": "Bloomberg",
       "previous_title": "Head of Data Products",
       "buying_role": "economic_buyer",
       "linkedin_posts": [
         {
-          "date": "2026-02-08",
+          "date": "2026-02-15",
           "text": "Our board deck this quarter included something new: a slide on finance infrastructure investment. When your VP Finance is saying the accounting stack needs to be upgraded, and your month-end close is measured in weeks instead of days, it's time to act. Operational excellence isn't glamorous but it's what separates companies that scale from companies that stall."
         },
         {
-          "date": "2025-12-18",
+          "date": "2025-12-25",
           "text": "FinPulse crossed $20M ARR this month. Three years ago we had zero revenue and a PowerPoint deck. Incredibly proud of what this team has built. But I'll be honest: growing this fast has exposed every crack in our operational foundation. 2026 is the year we invest in the infrastructure to match our ambitions."
         }
       ]
@@ -85,17 +85,17 @@
       "name": "Raj Patel",
       "title": "CTO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/rajpatel-cto",
-      "start_date_current_role": "2020-05-01",
+      "start_date_current_role": "2020-05-08",
       "previous_company": "Two Sigma",
       "previous_title": "VP Engineering",
       "buying_role": "technical_gatekeeper",
       "linkedin_posts": [
         {
-          "date": "2026-01-25",
+          "date": "2026-02-01",
           "text": "One of the hidden costs of rapid growth: your internal systems start fighting each other. At FinPulse, our billing system, accounting system, and CRM all have different views of reality. We spend engineering cycles reconciling data that should flow automatically. I'm pushing hard for unified financial infrastructure that our entire stack can trust as a single source of truth."
         },
         {
-          "date": "2025-11-12",
+          "date": "2025-11-19",
           "text": "We process terabytes of financial data for our customers daily. The engineering challenge is immense and our team is world-class. But I've realized that scaling the product is only half the battle -- scaling the business operations is equally critical and equally technical. Looking for tools that treat finance as a data engineering problem, not a data entry problem."
         }
       ]
@@ -104,13 +104,13 @@
       "name": "Amanda Foster",
       "title": "Staff Accountant",
       "linkedin_url": "https://linkedin.com/in/amandafoster-acct",
-      "start_date_current_role": "2025-03-10",
+      "start_date_current_role": "2025-03-17",
       "previous_company": "Deloitte",
       "previous_title": "Audit Senior",
       "buying_role": "user",
       "linkedin_posts": [
         {
-          "date": "2026-02-01",
+          "date": "2026-02-08",
           "text": "Honest moment: I left Big 4 audit to join a high-growth fintech and the month-end close here is harder than any audit I worked on at Deloitte. The volume of manual journal entries, the spreadsheet-based rev rec, the intercompany eliminations done by hand -- it's unsustainable at our current growth rate. Excited that leadership is prioritizing finance systems upgrades this quarter."
         }
       ]
@@ -122,37 +122,37 @@
       "signal_type": "funding_round",
       "description": "$48M Series B led by Sequoia Capital",
       "source": "Crunchbase",
-      "detected_date": "2025-10-15"
+      "detected_date": "2025-10-22"
     },
     {
       "signal_type": "new_executive_finance",
       "description": "VP Finance Michael Torres hired from Brex",
       "source": "LinkedIn",
-      "detected_date": "2025-07-15"
+      "detected_date": "2025-07-22"
     },
     {
       "signal_type": "job_posting_finance",
       "description": "Hiring Accounting Manager to lead accounting system migration",
       "source": "LinkedIn Jobs",
-      "detected_date": "2026-02-01"
+      "detected_date": "2026-02-08"
     },
     {
       "signal_type": "job_posting_finance",
       "description": "Hiring Controller with mid-market accounting platform experience required",
       "source": "LinkedIn Jobs",
-      "detected_date": "2026-01-15"
+      "detected_date": "2026-01-22"
     },
     {
       "signal_type": "migration_signal",
       "description": "VP Finance publicly evaluating accounting platforms, called out QuickBooks limitations on LinkedIn",
       "source": "LinkedIn",
-      "detected_date": "2026-02-15"
+      "detected_date": "2026-02-22"
     },
     {
       "signal_type": "blog_post_pain",
       "description": "CTO blog post about unifying financial data infrastructure and eliminating reconciliation waste",
       "source": "Company Blog",
-      "detected_date": "2026-01-20"
+      "detected_date": "2026-01-27"
     }
   ],
 
@@ -160,35 +160,35 @@
     {
       "source_type": "blog",
       "title": "Why Financial Data Infrastructure Is Our Next Big Investment",
-      "date": "2026-01-20",
+      "date": "2026-01-27",
       "url": "https://finpulse.com/blog/financial-data-infrastructure-investment",
       "text": "At FinPulse, we've built a platform that processes terabytes of financial market data in real time. Our customers -- hedge funds, asset managers, and corporate treasury teams -- depend on us for accurate, timely financial intelligence. The irony is that our own internal financial systems don't meet the same standard we set for our customers.\n\nLike many high-growth startups, we prioritized product and GTM investment over back-office infrastructure. That was the right call when we were a 50-person company with straightforward financials. But at 240 employees, $20M+ ARR, two legal entities, and complex multi-stream revenue recognition requirements, our finance stack has become a bottleneck.\n\nHere's the specific problem: our billing system (Stripe), accounting system (QuickBooks), CRM (HubSpot), and internal data warehouse all maintain separate versions of financial truth. Our finance team spends the first three weeks of every month reconciling these systems instead of providing strategic analysis. Our engineering team spends approximately 15% of their time building and maintaining custom integrations to keep financial data flowing between these systems.\n\nThis is not a sustainable operating model for a company targeting $50M ARR by 2027.\n\nIn Q1 2026, we're making a significant investment in modernizing our financial infrastructure. The goals are clear: real-time financial reporting, automated revenue recognition, seamless multi-entity consolidation, and a single source of financial truth that eliminates the reconciliation tax we currently pay every month.\n\nWe believe this investment will pay for itself within two quarters through reduced close time, eliminated engineering overhead, and better strategic decision-making from timely financial data."
     },
     {
       "source_type": "blog",
       "title": "The Operational Challenges of Scaling a Fintech to $20M ARR",
-      "date": "2025-12-02",
+      "date": "2025-12-09",
       "url": "https://finpulse.com/blog/scaling-fintech-20m-arr",
       "text": "FinPulse recently crossed the $20M ARR milestone. As CEO, I wanted to share some honest reflections on what it takes to scale a fintech company at this pace -- and where we've stumbled along the way.\n\nThe good: our product-market fit is undeniable. Net revenue retention is 135%. Our sales cycle has compressed from 90 days to 45 days over the past year. The market for real-time financial data is expanding rapidly as institutional investors demand faster insights.\n\nThe challenging: operational complexity has grown exponentially. We added our UK entity in Q3 2025, which introduced multi-currency accounting, international tax compliance, and intercompany transactions that our current systems weren't designed to handle. Our month-end close has stretched from 10 days to 22 days over the past six months -- a trajectory that's heading in the wrong direction.\n\nThe honest: we should have invested in operational infrastructure earlier. When you're growing 50%+ year-over-year, the gap between your revenue trajectory and your operational capability widens every quarter. We're now playing catch-up, hiring experienced finance leaders and evaluating modern systems that can grow with us.\n\nMy advice to founders approaching $10M ARR: start investing in back-office infrastructure now. The tools that got you to $10M won't get you to $50M, and the migration becomes harder and more disruptive the longer you wait."
     },
     {
       "source_type": "job_posting",
       "title": "Accounting Manager",
-      "date": "2026-02-01",
+      "date": "2026-02-08",
       "url": "https://finpulse.com/careers/accounting-manager",
       "text": "FinPulse is hiring an Accounting Manager to join our finance team in New York. This is a high-impact role: you'll lead our accounting system migration project, build scalable financial processes, and help reduce our month-end close from 22 days to under 7.\n\nKey responsibilities:\n- Lead the evaluation, selection, and implementation of a new accounting platform (migrating from QuickBooks Online)\n- Own the month-end and quarter-end close process, driving continuous improvement\n- Implement automated revenue recognition under ASC 606 for multiple revenue streams (platform fees, data subscriptions, professional services)\n- Manage multi-entity consolidation across US and UK operations\n- Build and document accounting policies and procedures for SOC 2 compliance\n- Supervise a team of 2 staff accountants\n\nRequirements:\n- 6-8 years of progressive accounting experience, including 2+ years in high-growth SaaS or fintech\n- Experience leading an accounting system implementation or migration (NetSuite, Sage Intacct, or modern alternatives)\n- Deep knowledge of ASC 606 and multi-element revenue recognition\n- Multi-entity and multi-currency consolidation experience\n- CPA required\n- Experience at a company that scaled from $10M to $50M+ ARR strongly preferred"
     },
     {
       "source_type": "job_posting",
       "title": "Controller",
-      "date": "2026-01-15",
+      "date": "2026-01-22",
       "url": "https://finpulse.com/careers/controller",
       "text": "FinPulse is looking for a Controller to build and lead our accounting function during a period of rapid growth. Reporting to the VP Finance, you'll be responsible for all accounting operations, financial reporting, and internal controls for a $20M+ ARR fintech company.\n\nThis role is ideal for someone who has scaled finance operations at a Series B/C company and thrives in environments where processes need to be built from scratch. You'll inherit a team of two staff accountants and an accounting system migration project that's in the evaluation phase.\n\nRequirements:\n- 8-12 years accounting experience with 3+ years in a controller or senior accounting role\n- Experience with mid-market accounting platforms (NetSuite, Sage Intacct, or modern cloud-native alternatives)\n- Track record of reducing month-end close timelines at high-growth companies\n- Strong ASC 606 expertise, particularly for SaaS and subscription businesses\n- Multi-entity, multi-currency experience required\n- CPA required, Big 4 background preferred\n- Fintech or financial services experience strongly preferred"
     },
     {
       "source_type": "press",
       "title": "FinPulse Raises $48M Series B to Expand Real-Time Financial Data Platform",
-      "date": "2025-10-16",
+      "date": "2025-10-23",
       "url": "https://techcrunch.com/2025/10/16/finpulse-series-b",
       "text": "FinPulse, the New York-based financial data aggregation platform, has raised $48 million in a Series B round led by Sequoia Capital. The round also included participation from existing investors Ribbit Capital and Index Ventures, bringing total funding to $68 million.\n\nThe company's platform provides real-time financial data analytics to institutional investors and corporate treasury teams, processing over 500 million data points daily. FinPulse has grown from $8M to $20M in ARR over the past 12 months and expanded to 240 employees.\n\nCEO Lisa Chang said the funding will be used to expand the platform's coverage to European markets, invest in AI-powered analytics features, and -- critically -- scale the company's internal operations. 'We've been laser-focused on product and growth, and that's gotten us here,' Chang said. 'But to go from $20M to $100M, we need operational infrastructure that matches our product ambitions. Finance, HR, legal -- all of it needs to level up.'\n\nThe company recently opened a UK office and hired Michael Torres, formerly of Brex, as VP Finance to lead the finance transformation."
     }
