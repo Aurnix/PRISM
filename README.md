@@ -283,9 +283,20 @@ The full analysis pipeline for 10 companies costs approximately **$5-10** in Cla
 
 ---
 
-## Current Phase
+## Current Phase & Roadmap
 
-**Phase 0 — Portfolio Demo.** This is a working demonstration of the Content Intelligence concept. It processes demo companies through the full analysis chain and produces markdown dossiers. There is no database, no frontend, no CRM integration, and no automated company discovery — those are Phase 1+ concerns.
+**Phase 0 — Portfolio Demo** (current). Full Content Intelligence pipeline running against 10 demo companies with fixture data. CLI-only, no persistence, no live data ingestion. The core analysis chain, scoring engine, signal decay, and dossier renderer are production-quality.
+
+**v1 — Operational Tool** (planned). Add a company by domain, auto-enrich from live data sources, persist everything to PostgreSQL, serve dossiers via FastAPI, re-analyze on a schedule. Designed for swappable LLM backends — Claude API for dev, self-hosted open-source model (GLM-5 or similar on Mac Studio cluster) for production inference.
+
+v1 architecture is fully spec'd in [`docs/V1_BUILD_PLAN.md`](docs/V1_BUILD_PLAN.md). Key interfaces:
+
+- **LLM Backend** — Abstract interface supporting Anthropic API and local inference (vLLM/SGLang)
+- **Data Access Layer** — Database-backed persistence with fixture fallback for dev
+- **Enrichment Services** — Pluggable data sources (Apollo, Crunchbase, job boards, blog scraping)
+- **REST API** — FastAPI endpoints for account management, analysis triggering, and dossier retrieval
+
+See also: [`V1_ROADMAP.md`](V1_ROADMAP.md) for the phase-by-phase build order.
 
 ---
 

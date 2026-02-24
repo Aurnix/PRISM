@@ -12,7 +12,7 @@
     "funding_stage": "Series C",
     "total_raised": 120000000,
     "last_round_amount": 65000000,
-    "last_round_date": "2025-07-10",
+    "last_round_date": "2025-07-22",
     "last_round_lead": "Tiger Global",
     "industry": "E-commerce",
     "hq_location": "Los Angeles, CA",
@@ -34,17 +34,17 @@
       "name": "Marcus Chen",
       "title": "CFO",
       "linkedin_url": "https://linkedin.com/in/marcuschen",
-      "start_date_current_role": "2024-09-01",
+      "start_date_current_role": "2024-09-13",
       "previous_company": "Flexport",
       "previous_title": "VP Finance",
       "buying_role": "economic_buyer",
       "linkedin_posts": [
         {
-          "date": "2026-01-28",
+          "date": "2026-02-09",
           "text": "We just completed our fastest month-end close ever at ShipStream -- 8 business days. That's down from 14 when I joined. Still not where I want us to be, but real progress. The combination of NetSuite optimization and better cross-functional data handoffs is paying dividends."
         },
         {
-          "date": "2025-11-15",
+          "date": "2025-11-27",
           "text": "The logistics industry has a unique financial complexity: revenue recognition across dozens of service tiers, multi-currency transactions, and real-time cost fluctuations. At ShipStream we process over 2M shipments per month. Getting the finance infrastructure right isn't optional -- it's existential."
         }
       ]
@@ -53,13 +53,13 @@
       "name": "Sarah Kim",
       "title": "VP Engineering",
       "linkedin_url": "https://linkedin.com/in/sarahkim-eng",
-      "start_date_current_role": "2023-04-01",
+      "start_date_current_role": "2023-04-13",
       "previous_company": "Shopify",
       "previous_title": "Senior Engineering Manager",
       "buying_role": "technical_gatekeeper",
       "linkedin_posts": [
         {
-          "date": "2025-12-20",
+          "date": "2026-01-01",
           "text": "One thing I've learned scaling ShipStream's platform: the internal tooling stack matters just as much as the customer-facing product. We've invested heavily in our data pipeline and observability. Next up is tightening the integration between our operational systems and finance."
         }
       ]
@@ -68,13 +68,13 @@
       "name": "Elena Vasquez",
       "title": "Controller",
       "linkedin_url": "https://linkedin.com/in/elenavasquez-cpa",
-      "start_date_current_role": "2025-02-01",
+      "start_date_current_role": "2025-02-13",
       "previous_company": "DoorDash",
       "previous_title": "Senior Accounting Manager",
       "buying_role": "user",
       "linkedin_posts": [
         {
-          "date": "2026-02-10",
+          "date": "2026-02-22",
           "text": "Multi-entity consolidation in a global logistics business is not for the faint of heart. We're operating across 4 entities now with different currencies and local compliance requirements. NetSuite handles a lot of it but the customizations are getting unwieldy. Anyone else feeling this pain at scale?"
         }
       ]
@@ -86,25 +86,25 @@
       "signal_type": "funding_round",
       "description": "$65M Series C led by Tiger Global",
       "source": "Crunchbase",
-      "detected_date": "2025-07-10"
+      "detected_date": "2025-07-22"
     },
     {
       "signal_type": "job_posting_finance",
       "description": "Hiring Senior Financial Analyst for FP&A and systems optimization",
       "source": "LinkedIn Jobs",
-      "detected_date": "2026-01-22"
+      "detected_date": "2026-02-03"
     },
     {
       "signal_type": "blog_post_pain",
       "description": "Blog post discussing challenges of financial operations at scale in logistics",
       "source": "Company Blog",
-      "detected_date": "2025-10-18"
+      "detected_date": "2025-10-30"
     },
     {
       "signal_type": "press_release_relevant",
       "description": "ShipStream announces expansion into European market with new UK entity",
       "source": "Business Wire",
-      "detected_date": "2025-12-05"
+      "detected_date": "2025-12-17"
     }
   ],
 
@@ -112,21 +112,21 @@
     {
       "source_type": "blog",
       "title": "Scaling Financial Operations in a High-Volume Logistics Business",
-      "date": "2025-10-18",
+      "date": "2025-10-30",
       "url": "https://shipstream.io/blog/scaling-financial-ops",
       "text": "When you process over two million shipments a month, your finance team doesn't just close the books -- they're reconstructing a financial narrative from millions of individual transactions, each with its own revenue recognition timing, cost allocation, and currency considerations.\n\nAt ShipStream, we've been on a multi-year journey to build financial infrastructure that can keep pace with our operational scale. When we were processing 100K shipments monthly, our accounting processes were manageable. At 2M+, every inefficiency compounds.\n\nOur current stack centers on NetSuite, which has been solid for core accounting. But as we've grown into multi-entity operations spanning four countries, the customization burden has grown significantly. We've built over 40 custom scripts and workflows in NetSuite to handle our specific revenue recognition and cost allocation needs.\n\nThe challenge isn't any single process -- it's the interconnection between them. A shipment that starts in our LA warehouse, crosses through a Canadian 3PL, and delivers to a UK customer touches three entities, two currencies, and multiple revenue recognition triggers. Multiply that by millions and you begin to understand why our close process has been stubbornly resistant to compression.\n\nWe're making progress. Our month-end close has dropped from 14 to 8 business days over the past year. But our target is 5 days, and getting there will require rethinking how our systems talk to each other rather than just optimizing within them."
     },
     {
       "source_type": "press",
       "title": "ShipStream Expands to Europe with New London Office",
-      "date": "2025-12-05",
+      "date": "2025-12-17",
       "url": "https://businesswire.com/shipstream-europe-expansion",
       "text": "ShipStream, the AI-powered logistics optimization platform, announced the opening of its first European office in London and the launch of UK-based fulfillment orchestration services. The expansion follows the company's $65M Series C and brings ShipStream's total entity count to four, spanning the US, Canada, UK, and Singapore.\n\nCFO Marcus Chen noted that the international expansion required significant investment in financial infrastructure. 'Operating across multiple jurisdictions with different compliance requirements adds layers of complexity to everything from revenue recognition to tax reporting,' Chen said. 'We're building the finance team and systems to support truly global operations.'"
     },
     {
       "source_type": "job_posting",
       "title": "Senior Financial Analyst",
-      "date": "2026-01-22",
+      "date": "2026-02-03",
       "url": "https://shipstream.io/careers/senior-financial-analyst",
       "text": "ShipStream is seeking a Senior Financial Analyst to join our FP&A team in Los Angeles. This role will focus on financial systems optimization, cross-entity reporting, and building scalable financial models for our rapidly growing logistics platform.\n\nResponsibilities:\n- Build and maintain financial models across 4 international entities\n- Partner with Engineering to improve data pipelines between operational and financial systems\n- Drive automation of recurring financial analyses and reporting\n- Support the monthly close process with variance analysis and business insights\n\nRequirements:\n- 5-7 years in FP&A, preferably in high-growth SaaS or logistics/marketplace businesses\n- Deep experience with NetSuite including advanced reporting and SuiteScript customization\n- Proficiency in SQL and comfort working with large data sets\n- Experience with multi-entity, multi-currency financial operations\n- Strong understanding of ASC 606 revenue recognition\n\nShipStream processes 2M+ shipments monthly across a global network. You'll be helping build the financial infrastructure for a company that's scaling rapidly across geographies."
     }

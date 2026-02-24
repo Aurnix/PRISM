@@ -5,9 +5,10 @@
 **PRISM** — Predictive Revenue Intelligence & Signal Mapping  
 A GTM (Go-To-Market) signal engine that combines standard firmographic/technographic enrichment with a proprietary **Content Intelligence Layer** — an LLM-based analytical engine that extracts sub-semantic organizational signals from public content to assess buying readiness, map buying committee psychology, and generate contextual outreach strategies.
 
-**Author:** Joseph Sherman  
-**Repo name:** `prism`  
-**Current phase:** Phase 0 — Portfolio Demo
+**Author:** Joseph Sherman
+**Repo name:** `prism`
+**Current phase:** Phase 0 — Portfolio Demo (complete)
+**Next phase:** v1 — Operational Tool (spec'd in `docs/V1_BUILD_PLAN.md`)
 
 ---
 
@@ -19,33 +20,56 @@ PRISM takes a target company, scrapes their public content (blog, LinkedIn, job 
 
 ---
 
-## Phase 0 Scope (WHAT TO BUILD NOW)
+## Phase 0 Scope (COMPLETE)
 
-Phase 0 is a **portfolio demonstration piece**. It processes 5-10 manually-supplied companies through the full Content Intelligence analysis chain and produces markdown dossiers. There is no database, no frontend dashboard, no CRM integration, no automated discovery.
+Phase 0 is a **portfolio demonstration piece**. All components below are implemented and tested (91 tests passing).
 
-### Build These Components
+### Completed Components
 
 1. **Data models** (Pydantic) for accounts, contacts, content items, signals, analyses
-2. **Content scraper** — Blog scraping via BeautifulSoup/requests (RSS detection + fallback to HTML parsing)
+2. **Content scraper** — Blog scraping via BeautifulSoup/httpx (RSS detection + fallback to HTML parsing)
 3. **Content Intelligence analysis chain** — The 4-stage LLM prompt pipeline (Stage 1: per-item extraction → Stage 2: cross-corpus synthesis → Stage 3: person-level analysis → Stage 4: synthesis & scoring)
 4. **Scoring engine** — ICP fit score, buying readiness score, timing score, composite score with configurable weights
 5. **Signal decay engine** — Temporal weighting function for all signal types
 6. **Dossier generator** — Renders the full intelligence brief in markdown (see format specification below)
 7. **CLI orchestrator** — `python -m prism.cli analyze <company_slug>` runs the full pipeline for one company, `python -m prism.cli analyze-all` runs all companies
-8. **Fixture data** — Manual JSON files for the 10 demo companies (firmographics, contacts, tech stack, LinkedIn posts)
+8. **Fixture data** — Manual JSON files for 10 demo companies (firmographics, contacts, tech stack, LinkedIn posts)
+9. **Rules-based play fallback** — PLAY_MATRIX lookup when LLM doesn't generate a play
 
-### Do NOT Build These (Phase 1+)
+---
 
-- Database / PostgreSQL / SQLAlchemy
-- FastAPI endpoints
-- Next.js frontend / Streamlit dashboard
-- Crunchbase/Apollo/BuiltWith API integrations
-- Celery task queue
-- CRM export
+## v1 Scope (WHAT TO BUILD NEXT)
+
+v1 upgrades PRISM from a CLI demo to an operational tool. Full architecture spec is in `docs/V1_BUILD_PLAN.md`. The roadmap is in `V1_ROADMAP.md`.
+
+### v1 Key Additions
+
+- **PostgreSQL + SQLAlchemy** — Persistent storage for accounts, analyses, dossiers
+- **Data Access Layer (DAL)** — Abstract interface with Database and Fixture implementations
+- **LLM Backend abstraction** — Swappable between Claude API and local inference (vLLM/SGLang on Mac Studio cluster with open-source models like GLM-5)
+- **FastAPI endpoints** — REST API for account management, analysis triggering, dossier retrieval
+- **Enrichment services** — Pluggable data sources (Apollo, Crunchbase, job board scrapers, Proxycurl)
+- **Task queue** — Background analysis with arq + Redis
+- **Scheduled re-analysis** — Daily/weekly re-scoring as signals decay and new ones appear
+- **Discovery pipeline** — Auto-find ICP-matching companies from enrichment APIs
+
+### v1 Does NOT Include
+
+- CRM export (Salesforce/HubSpot)
 - Feedback loop / recalibration engine
 - Re-engagement monitor
-- Authentication
+- Multi-tenant / team management
 - Docker Compose
+- Email/Slack notifications
+
+### v1 Architecture Reference
+
+The four load-bearing interfaces are fully specified in `docs/V1_BUILD_PLAN.md`:
+
+1. **`LLMBackend`** — Abstract LLM interface with `AnthropicBackend` and `LocalInferenceBackend` implementations
+2. **Database schema** — 7 PostgreSQL tables (accounts, contacts, linkedin_posts, signals, content_items, analyses, dossiers)
+3. **`DataAccessLayer`** — Abstract DAL with `DatabaseDAL` and `FixtureDAL` implementations
+4. **`EnrichmentSource`** — Pluggable enrichment interface with orchestrator
 
 ### Phase 0 Data Strategy
 
@@ -742,11 +766,13 @@ Target: 7-8 out of 10 companies produce genuinely useful analysis.
 
 These files contain additional detail referenced by this CLAUDE.md:
 
-- `docs/PRISM_Build_Plan_v01.md` — Full architecture spec with all Pydantic schemas, prompt templates, database schemas (for future phases), cost modeling
+- `docs/PRISM_Build_Plan_v01.md` — Full Phase 0 architecture spec with all Pydantic schemas, prompt templates, cost modeling
 - `docs/PRISM_Scoring_Weights_v1.md` — Complete scoring weight documentation with rationale for every weight
 - `docs/PRISM_Demo_Product_Ledgerflow.md` — Fictional product definition, ICP, buyer personas, competitive landscape
+- `docs/V1_BUILD_PLAN.md` — **v1 architecture specification** with full interface definitions (LLMBackend, Database schema, DAL, Enrichment services, API layer, task queue)
+- `V1_ROADMAP.md` — Phase-by-phase build order with timeline estimates
 
-These are the source of truth. If this CLAUDE.md conflicts with those docs, the docs win.
+For Phase 0, this CLAUDE.md is the source of truth. For v1 architecture, `docs/V1_BUILD_PLAN.md` is the source of truth.
 
 ---
 

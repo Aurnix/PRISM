@@ -14,6 +14,7 @@ from prism.config import (
     ICP_WEIGHTS,
     INDUSTRY_SCORES,
     MAJOR_TECH_HUBS,
+    PLAY_MATRIX,
     READINESS_WEIGHTS,
     TIER_THRESHOLDS,
     TIMING_WEIGHTS,
@@ -457,3 +458,62 @@ def score_account(
         composite_score=round(composite, 4),
         priority_tier=tier,
     )
+
+
+# ─── Play Fallback ──────────────────────────────────────────────────────────
+
+
+def lookup_play_fallback(
+    journey_label: str,
+    stress_level: str,
+    tech_stack_erp: Optional[str] = None,
+) -> dict:
+    """Look up a rules-based play from PLAY_MATRIX when LLM doesn't generate one.
+
+    Args:
+        journey_label: Buying journey position (status_quo, problem_aware, etc.).
+        stress_level: Organizational stress level (low, moderate, elevated, high).
+        tech_stack_erp: Current ERP/accounting tool for competitive context.
+
+    Returns:
+        Play dict from PLAY_MATRIX, or a sensible default.
+    """
+    # Determine competitive context
+    erp = (tech_stack_erp or "").lower()
+    has_competitor = any(
+        tool in erp for tool in ["netsuite", "sap", "oracle", "sage", "rillet", "puzzle", "digits", "numeric"]
+    )
+    context = "competitive_displacement" if has_competitor else "greenfield"
+
+    # Try exact match first
+    key = (context, journey_label, stress_level)
+    if key in PLAY_MATRIX:
+        return PLAY_MATRIX[key]
+
+    # Fuzzy: try adjacent stress levels
+    stress_order = ["low", "moderate", "elevated", "high"]
+    try:
+        idx = stress_order.index(stress_level)
+    except ValueError:
+        idx = 1
+    for offset in [1, -1, 2, -2]:
+        adj_idx = idx + offset
+        if 0 <= adj_idx < len(stress_order):
+            adj_key = (context, journey_label, stress_order[adj_idx])
+            if adj_key in PLAY_MATRIX:
+                return PLAY_MATRIX[adj_key]
+
+    # Fuzzy: try greenfield fallback if competitive didn't match
+    if context == "competitive_displacement":
+        for sl in stress_order:
+            fallback_key = ("greenfield", journey_label, sl)
+            if fallback_key in PLAY_MATRIX:
+                return PLAY_MATRIX[fallback_key]
+
+    # Ultimate fallback
+    return {
+        "play": "educational_nurture",
+        "description": "Insufficient data for targeted play. Begin with educational outreach.",
+        "sequence": ["thought_leadership_email", "content_drip", "quarterly_check_in"],
+        "timeline": "6-week sequence",
+    }

@@ -12,7 +12,7 @@
     "funding_stage": "Seed",
     "total_raised": 4200000,
     "last_round_amount": 4200000,
-    "last_round_date": "2025-07-20",
+    "last_round_date": "2025-09-01",
     "last_round_lead": "Techstars Ventures",
     "industry": "SaaS",
     "hq_location": "Denver, CO",
@@ -34,17 +34,17 @@
       "name": "Mike Stanton",
       "title": "CEO & Co-Founder",
       "linkedin_url": "https://linkedin.com/in/mikestanton-cb",
-      "start_date_current_role": "2024-02-01",
+      "start_date_current_role": "2024-03-15",
       "previous_company": "Datadog",
       "previous_title": "Senior Product Manager",
       "buying_role": "economic_buyer",
       "linkedin_posts": [
         {
-          "date": "2025-12-05",
+          "date": "2026-01-17",
           "text": "CloudBolt just closed our first $100K ARR quarter. Still a long way to go but the traction is real. Enterprise cloud spending is a $200B problem and most teams are still managing it with spreadsheets and prayer. We're building the solution."
         },
         {
-          "date": "2025-09-18",
+          "date": "2025-10-31",
           "text": "Graduated from Techstars Boulder and closed our seed round. Grateful for the incredible mentors and investors who believe in our mission. Now the real work begins -- turning a great product into a great company."
         }
       ]
@@ -53,13 +53,13 @@
       "name": "Sarah Blackwood",
       "title": "Head of Operations",
       "linkedin_url": "https://linkedin.com/in/sarahblackwood-ops",
-      "start_date_current_role": "2025-03-15",
+      "start_date_current_role": "2025-04-27",
       "previous_company": "Techstars",
       "previous_title": "Operations Associate",
       "buying_role": "user",
       "linkedin_posts": [
         {
-          "date": "2026-01-10",
+          "date": "2026-02-22",
           "text": "One of the joys of being employee #8 at a startup: I handle HR, office management, accounting, and vendor negotiations. Currently doing our books in Google Sheets because we're too early for real accounting software. It works for now but I know we'll need to level up eventually."
         }
       ]
@@ -71,13 +71,13 @@
       "signal_type": "funding_round",
       "description": "$4.2M seed round from Techstars Ventures and angel investors",
       "source": "Crunchbase",
-      "detected_date": "2025-07-20"
+      "detected_date": "2025-09-01"
     },
     {
       "signal_type": "blog_post_pain",
       "description": "CEO blog post discusses early-stage operational challenges but framed as scrappy startup badge of honor rather than urgent pain",
       "source": "Company Blog",
-      "detected_date": "2025-11-15"
+      "detected_date": "2025-12-28"
     }
   ],
 
@@ -85,7 +85,7 @@
     {
       "source_type": "blog",
       "title": "Startup Lessons from Our First Year",
-      "date": "2025-11-15",
+      "date": "2025-12-28",
       "url": "https://cloudbolt.io/blog/first-year-lessons",
       "text": "CloudBolt turned one year old last month, and I wanted to share some reflections on what we've learned building a cloud cost management startup.\n\nFirst, the good: we found product-market fit faster than expected. DevOps teams are desperate for better visibility into multi-cloud spending, and our real-time monitoring plus AI-driven forecasting is resonating. We have 35 paying customers and just crossed $400K ARR.\n\nNow the honest parts. Running a 28-person company is chaos in the best way. Our Head of Operations, Sarah, handles everything from payroll to office supplies to vendor contracts. Our finances are managed in Google Sheets because we're simply not at the stage where accounting software makes sense. Our CEO (that's me) still approves every expense over $500.\n\nWe know this won't scale, and that's okay. At this stage, every dollar of runway matters more than operational elegance. We'll invest in proper financial infrastructure when we have the revenue to justify it -- probably around the Series A mark.\n\nFor now, we're focused on what matters: shipping product, closing deals, and proving that the cloud cost management problem is big enough to build a generational company around. The operational maturity will come."
     }
