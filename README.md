@@ -26,10 +26,10 @@ These are signals that keyword matching and traditional NLP cannot detect.
 │                         PRISM v1 Pipeline                            │
 │                                                                      │
 │  DATA LAYER                                                          │
-│  ┌───────────┐  ┌──────────┐  ┌──────────┐  ┌────────────┐         │
-│  │ Fixture   │  │  Blog    │  │ Job Board│  │  Apollo    │         │
-│  │ Data      │  │ Scraper  │  │ Scraper  │  │  API      │         │
-│  └─────┬─────┘  └────┬─────┘  └────┬─────┘  └─────┬──────┘         │
+│  ┌───────────┐  ┌──────────┐  ┌──────────┐  ┌────────────┐           │
+│  │ Fixture   │  │  Blog    │  │ Job Board│  │  Apollo    │           │
+│  │ Data      │  │ Scraper  │  │ Scraper  │  │  API      │            │
+│  └─────┬─────┘  └────┬─────┘  └────┬─────┘  └─────┬──────┘           │
 │        └──────────────┴─────────────┴──────────────┘                 │
 │                               │                                      │
 │              ┌────────────────▼────────────────┐                     │
