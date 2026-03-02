@@ -221,3 +221,28 @@ SCRAPER_USER_AGENT = "PRISM/0.1 (research; +https://github.com/Aurnix/prism)"
 SCRAPER_TIMEOUT = 10
 SCRAPER_RATE_LIMIT = 1.0  # seconds between requests
 SCRAPER_MAX_PAGES = 5
+
+# ─── v1: Database ─────────────────────────────────────────────────────────
+
+DATABASE_URL = os.getenv("DATABASE_URL", "")
+
+# ─── v1: API ──────────────────────────────────────────────────────────────
+
+API_HOST = os.getenv("API_HOST", "0.0.0.0")
+API_PORT = int(os.getenv("API_PORT", "8000"))
+API_KEYS = [k.strip() for k in os.getenv("API_KEYS", "").split(",") if k.strip()]
+CORS_ORIGINS = [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
+
+# ─── v1: LLM Backend ─────────────────────────────────────────────────────
+
+LLM_BACKEND = os.getenv("LLM_BACKEND", "anthropic")  # 'anthropic' | 'local' | 'router'
+LLM_LOCAL_URL = os.getenv("LLM_LOCAL_URL", "http://localhost:8080")
+LLM_LOCAL_MODEL = os.getenv("LLM_LOCAL_MODEL", "local-model")
+LLM_MAX_SPEND_USD = float(os.getenv("LLM_MAX_SPEND_USD", "100.0"))
+
+# ─── v1: Enrichment API Keys ─────────────────────────────────────────────
+
+APOLLO_API_KEY = os.getenv("APOLLO_API_KEY", "")
+CRUNCHBASE_API_KEY = os.getenv("CRUNCHBASE_API_KEY", "")
+BUILTWITH_API_KEY = os.getenv("BUILTWITH_API_KEY", "")
+PROXYCURL_API_KEY = os.getenv("PROXYCURL_API_KEY", "")

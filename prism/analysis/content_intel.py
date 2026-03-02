@@ -29,7 +29,7 @@ from prism.models.activation import Angle, Play
 from prism.models.contact import ContactRecord
 from prism.models.content import ContentCorpus, ContentItem
 from prism.models.signal import Signal
-from prism.services.llm import LLMService
+from prism.services.llm_backend import LLMBackend
 
 logger = logging.getLogger(__name__)
 
@@ -45,8 +45,11 @@ def _load_prompt(stage: str) -> str:
 class ContentIntelligenceChain:
     """The 4-stage Content Intelligence analysis pipeline."""
 
-    def __init__(self, llm: Optional[LLMService] = None) -> None:
-        self.llm = llm or LLMService()
+    def __init__(self, llm: Optional[LLMBackend] = None) -> None:
+        if llm is None:
+            from prism.services import get_llm_backend
+            llm = get_llm_backend()
+        self.llm = llm
 
     async def analyze(
         self,
