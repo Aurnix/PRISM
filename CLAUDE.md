@@ -7,8 +7,8 @@ A GTM (Go-To-Market) signal engine that combines standard firmographic/technogra
 
 **Author:** Joseph Sherman
 **Repo name:** `prism`
-**Current phase:** Phase 0 — Portfolio Demo (complete)
-**Next phase:** v1 — Operational Tool (spec'd in `docs/V1_BUILD_PLAN.md`)
+**Current phase:** v1 — Operational Tool (Phases 1-7 built, Phases 8-9 pending)
+**Previous phase:** Phase 0 — Portfolio Demo (complete)
 
 ---
 
@@ -22,7 +22,7 @@ PRISM takes a target company, scrapes their public content (blog, LinkedIn, job 
 
 ## Phase 0 Scope (COMPLETE)
 
-Phase 0 is a **portfolio demonstration piece**. All components below are implemented and tested (91 tests passing).
+Phase 0 is a **portfolio demonstration piece**. All components below are implemented and tested.
 
 ### Completed Components
 
@@ -38,24 +38,48 @@ Phase 0 is a **portfolio demonstration piece**. All components below are impleme
 
 ---
 
-## v1 Scope (WHAT TO BUILD NEXT)
+## v1 Scope (IN PROGRESS — Phases 1-7 Complete)
 
 v1 upgrades PRISM from a CLI demo to an operational tool. Full architecture spec is in `docs/V1_BUILD_PLAN.md`. The roadmap is in `V1_ROADMAP.md`.
 
-### v1 Key Additions
+### v1 Build Status
 
-- **PostgreSQL + SQLAlchemy** — Persistent storage across 9 tables (raw_responses, accounts, contacts, linkedin_posts, content_items, signals, analyses, dossiers, enrichment_log)
-- **Data Access Layer (DAL)** — Abstract interface with Database and Fixture implementations
-- **LLM Backend abstraction** — Swappable between Claude API and local inference (vLLM/SGLang on Mac Studio cluster with open-source models like GLM-5)
-- **Extraction pipeline** — Multi-path preprocessing (trafilatura + HTML parser + pattern library) → LLM extraction → structured signals with typed_data
-- **FastAPI endpoints** — REST API for account management, analysis triggering, dossier retrieval
-- **Collection-first data strategy** — Own the data pipeline (blog scraping, job boards, press) before depending on third-party enrichment
-- **Enrichment services** — Pluggable data sources (Apollo, BuiltWith, Crunchbase, Proxycurl) added as supplements
-- **Task queue** — Background analysis with arq + Redis
-- **Scheduled re-analysis** — Daily/weekly re-scoring as signals decay and new ones appear
-- **Discovery pipeline** — Auto-find ICP-matching companies
+| Phase | Name | Status | Tests |
+|-------|------|--------|-------|
+| Phase 1 | Foundation (LLM Backend) | **COMPLETE** | 33 tests |
+| Phase 2 | Persistence Layer | **COMPLETE** | 12 tests |
+| Phase 3 | API Layer | **COMPLETE** | 9 tests |
+| Phase 4 | Extraction Pipeline | **COMPLETE** | 27 tests |
+| Phase 5 | Collection & Enrichment | **COMPLETE** | 16 tests |
+| Phase 6 | Third-Party Enrichment | **COMPLETE** (Apollo) | via Phase 5 |
+| Phase 7 | Task Queue & Scheduling | **COMPLETE** | 8 tests |
+| Phase 8 | Discovery Pipeline | Pending | — |
+| Phase 9 | Frontend | Pending | — |
 
-### v1 Does NOT Include
+**Total: 213 tests passing across all phases.**
+
+### v1 Implemented Components
+
+- **`LLMBackend` abstraction** (`prism/services/llm_backend.py`) — Swappable between Claude API (`AnthropicBackend`) and local inference (`LocalInferenceBackend` for vLLM/SGLang). `ModelRouter` for mixed-model strategies. Token/cost budget enforcement.
+- **PostgreSQL + SQLAlchemy** (`prism/db/`) — 9 async ORM tables with UUID PKs, JSONB columns, proper indexes and relationships. Async engine via `asyncpg`.
+- **Data Access Layer** (`prism/data/dal.py`) — Abstract interface with `DatabaseDAL` (full PostgreSQL CRUD) and `FixtureDAL` (read-only wrapper around fixture JSON).
+- **FastAPI REST API** (`prism/api/`) — Full REST endpoints: health, accounts CRUD, analysis trigger, signals, content upload, dossier retrieval, enrichment trigger. X-API-Key auth, dependency injection.
+- **Extraction pipeline** (`prism/services/extraction.py`, `prism/models/extraction.py`) — Multi-path preprocessing (HTML parser + pattern library with ~25 tech fingerprints) → LLM extraction → structured signals with typed_data schemas (9 signal data types as Pydantic discriminated unions).
+- **Enrichment system** (`prism/services/enrichment/`) — `EnrichmentSource` ABC with pluggable interface. Implemented sources: `BlogScraperEnrichment`, `JobBoardEnrichment` (Greenhouse + Lever public APIs), `ApolloEnrichment` (contacts + firmographics). `EnrichmentOrchestrator` runs all available sources, merges results, handles failures gracefully.
+- **Task queue** (`prism/tasks.py`) — Background task functions for enrichment, analysis, dossier generation, and full pipeline. Scheduler functions for daily reanalysis and weekly scraping. arq `WorkerSettings` for Redis-backed queue deployment.
+- **Shared pipeline** (`prism/pipeline.py`) — `AnalysisPipeline` class extracted from CLI, reusable by API and tasks.
+
+### v1 CLI Commands (New)
+
+```bash
+# v1 additions to Phase 0 CLI:
+python -m prism.cli enrich <slug>     # Run enrichment sources
+python -m prism.cli serve             # Start FastAPI API server
+python -m prism.cli init-db           # Create database tables
+python -m prism.cli seed              # Load fixture data into PostgreSQL
+```
+
+### v1 Does NOT Include (Deferred)
 
 - CRM export (Salesforce/HubSpot)
 - Feedback loop / recalibration engine
@@ -77,6 +101,11 @@ The extraction pipeline contract is specified in `docs/PRISM_Extraction_Schema_v
 
 The build order is in `V1_ROADMAP.md` (9 phases: Foundation → Persistence → API → Extraction → Collection → Enrichment → Task Queue → Discovery → Frontend).
 
+### What Remains (Phases 8-9)
+
+- **Phase 8: Discovery Pipeline** — ICP-based company discovery, signal-triggered promotion, scored watchlist, `POST /accounts/discover` endpoint
+- **Phase 9: Frontend** — Streamlit dashboard (ship first), then Next.js: company cards sorted by score, dossier viewer, signal timeline, score trends
+
 ### Phase 0 Data Strategy
 
 | Data Type | Source | Method |
@@ -94,9 +123,11 @@ The build order is in `V1_ROADMAP.md` (9 phases: Foundation → Persistence → 
 
 ## Tech Stack
 
+### Core (Phase 0 + v1)
+
 - **Python 3.11+** with type hints throughout
 - **Pydantic v2** for all data models (use `BaseModel`, validate everything)
-- **httpx** for async HTTP (blog scraping, Claude API)
+- **httpx** for async HTTP (blog scraping, Claude API, enrichment APIs)
 - **BeautifulSoup4** for HTML parsing
 - **anthropic** Python SDK for Claude API calls
 - **Click** for CLI
@@ -104,9 +135,17 @@ The build order is in `V1_ROADMAP.md` (9 phases: Foundation → Persistence → 
 - **python-dotenv** for environment variables
 - **pytest** for testing
 
-### NOT using (Phase 0)
+### v1 Additions
 
-- FastAPI, SQLAlchemy, PostgreSQL, Redis, Celery, Next.js, Docker
+- **SQLAlchemy 2.0** (async, `Mapped[]` annotations) for ORM persistence
+- **asyncpg** for PostgreSQL async driver
+- **FastAPI** for REST API
+- **uvicorn** for ASGI server
+
+### Optional (v1, used when configured)
+
+- **arq** + **Redis** for background task queue (not required — tasks can run in-process)
+- **alembic** for database migrations (schema managed via `init-db` for now)
 
 ---
 
@@ -117,13 +156,16 @@ prism/
 ├── CLAUDE.md                       # This file
 ├── pyproject.toml
 ├── README.md
+├── V1_ROADMAP.md                   # Phase-by-phase build plan
 ├── .env.example                    # ANTHROPIC_API_KEY=sk-ant-...
 ├── .gitignore
 │
 ├── prism/
 │   ├── __init__.py
-│   ├── cli.py                      # Click CLI entry point
-│   ├── config.py                   # Settings, weights, ICP config
+│   ├── cli.py                      # Click CLI (analyze, enrich, serve, seed, init-db)
+│   ├── config.py                   # Settings, weights, ICP config, v1 env vars
+│   ├── pipeline.py                 # [v1] AnalysisPipeline — shared orchestration
+│   ├── tasks.py                    # [v1] Background task functions + arq worker
 │   │
 │   ├── models/
 │   │   ├── __init__.py
@@ -132,18 +174,53 @@ prism/
 │   │   ├── content.py              # ContentItem, ContentCorpus
 │   │   ├── signal.py               # Signal, SignalDecayConfig
 │   │   ├── analysis.py             # AnalyzedAccount, WhyNowHypothesis, ConfidenceAssessment
-│   │   └── activation.py           # Play, Angle, AccountBrief
+│   │   ├── activation.py           # Play, Angle, AccountBrief
+│   │   └── extraction.py           # [v1] ExtractionResult, signal typed_data schemas
 │   │
 │   ├── services/
-│   │   ├── __init__.py
-│   │   ├── llm.py                  # Claude API wrapper (structured output, retry, cost tracking)
-│   │   └── scraper.py              # Blog scraper (RSS + HTML fallback)
+│   │   ├── __init__.py             # get_llm_backend() factory
+│   │   ├── llm.py                  # Legacy Claude API wrapper (Phase 0)
+│   │   ├── llm_backend.py          # [v1] LLMBackend ABC, TokenBudget, LLMResponse
+│   │   ├── scraper.py              # Blog scraper (RSS + HTML fallback)
+│   │   ├── extraction.py           # [v1] Multi-path extraction service
+│   │   ├── backends/
+│   │   │   ├── __init__.py
+│   │   │   ├── anthropic_backend.py  # [v1] Claude API via AsyncAnthropic
+│   │   │   ├── local_backend.py      # [v1] vLLM/SGLang OpenAI-compat client
+│   │   │   └── router.py             # [v1] Task-based model routing
+│   │   └── enrichment/
+│   │       ├── __init__.py
+│   │       ├── base.py             # [v1] EnrichmentSource ABC, EnrichmentResult
+│   │       ├── orchestrator.py     # [v1] Runs all sources, merges results
+│   │       ├── blog_scraper.py     # [v1] Blog scraper as EnrichmentSource
+│   │       ├── job_boards.py       # [v1] Greenhouse + Lever public APIs
+│   │       └── apollo.py           # [v1] Apollo API (contacts + firmographics)
 │   │
 │   ├── analysis/
 │   │   ├── __init__.py
 │   │   ├── content_intel.py        # THE proprietary layer — 4-stage analysis chain
 │   │   ├── scoring.py              # ICP scoring, readiness scoring, composite scoring
 │   │   └── signal_decay.py         # Temporal decay weighting
+│   │
+│   ├── api/                        # [v1] FastAPI REST API
+│   │   ├── __init__.py             # App factory with CORS
+│   │   ├── deps.py                 # Dependency injection (DAL, LLM, auth)
+│   │   ├── schemas.py              # Request/response Pydantic models
+│   │   └── routes.py               # All REST endpoints
+│   │
+│   ├── db/                         # [v1] SQLAlchemy persistence
+│   │   ├── __init__.py
+│   │   ├── models.py               # 9 ORM tables (Mapped[] style)
+│   │   ├── session.py              # Async engine + session factory
+│   │   └── converters.py           # Pydantic <-> SQLAlchemy conversion
+│   │
+│   ├── data/
+│   │   ├── __init__.py             # get_dal() factory
+│   │   ├── dal.py                  # [v1] DataAccessLayer ABC
+│   │   ├── database_dal.py         # [v1] PostgreSQL DAL implementation
+│   │   ├── fixture_dal.py          # [v1] Read-only fixture DAL
+│   │   ├── loader.py               # Loads fixture data (Phase 0)
+│   │   └── product.py              # Fictional product definition (Ledgerflow)
 │   │
 │   ├── prompts/
 │   │   ├── v1/
@@ -154,37 +231,41 @@ prism/
 │   │   │   └── activation_angle.txt
 │   │   └── README.md               # Prompt versioning notes
 │   │
-│   ├── output/
-│   │   ├── __init__.py
-│   │   └── dossier.py              # Markdown dossier renderer
-│   │
-│   └── data/
+│   └── output/
 │       ├── __init__.py
-│       ├── loader.py               # Loads fixture data
-│       └── product.py              # Fictional product definition (Ledgerflow)
+│       └── dossier.py              # Markdown dossier renderer
 │
 ├── fixtures/
 │   ├── companies/
 │   │   ├── _template.json          # Template for adding new companies
 │   │   ├── company_a.json          # One file per demo company
-│   │   ├── company_b.json
 │   │   └── ...
 │   └── scraped_content/            # Cached blog scrapes (avoid re-scraping)
-│       └── company_a/
-│           ├── blog_posts.json
-│           └── raw_html/
 │
-├── output/                         # Generated dossiers land here
-│   └── dossiers/
-│       ├── company_a_dossier.md
-│       └── ...
+├── output/dossiers/                # Generated dossier markdown files
+│
+├── docs/                           # Architecture and spec documents
+│   ├── V1_BUILD_PLAN.md
+│   ├── PRISM_Build_Plan_v01.md
+│   ├── PRISM_Extraction_Schema_v1.md
+│   ├── PRISM_Scoring_Weights_v1.md
+│   ├── PRISM_Demo_Product_Ledgerflow.md
+│   └── PRISM_v1_Architecture_Session_Summary.md
 │
 └── tests/
-    ├── conftest.py
-    ├── test_scoring.py
-    ├── test_signal_decay.py
-    ├── test_content_intel.py
-    └── test_dossier.py
+    ├── conftest.py                 # Shared fixtures (sample_account, etc.)
+    ├── test_scoring.py             # Phase 0
+    ├── test_signal_decay.py        # Phase 0
+    ├── test_content_intel.py       # Phase 0
+    ├── test_dossier.py             # Phase 0
+    ├── test_llm_backend.py         # [v1] LLMBackend, TokenBudget, Router
+    ├── test_db_models.py           # [v1] SQLAlchemy ORM models
+    ├── test_converters.py          # [v1] Pydantic <-> SQLAlchemy conversion
+    ├── test_dal.py                 # [v1] DAL interface + FixtureDAL
+    ├── test_api.py                 # [v1] FastAPI route tests
+    ├── test_extraction.py          # [v1] Extraction models + service
+    ├── test_enrichment.py          # [v1] Enrichment interface + orchestrator
+    └── test_tasks.py               # [v1] Background task functions
 ```
 
 ---
@@ -664,6 +745,7 @@ Never crash. Always produce output, even if degraded. The quality of degradation
 ## CLI Interface
 
 ```bash
+# ─── Phase 0 commands ───────────────────────────────
 # Analyze a single company
 python -m prism.cli analyze company_a
 
@@ -678,6 +760,20 @@ python -m prism.cli weights
 
 # Estimate cost before running
 python -m prism.cli estimate company_a
+
+# ─── v1 commands ────────────────────────────────────
+# Run enrichment sources for a company
+python -m prism.cli enrich company_a
+
+# Start the FastAPI API server
+python -m prism.cli serve
+python -m prism.cli serve --host 0.0.0.0 --port 8000
+
+# Create database tables (requires DATABASE_URL)
+python -m prism.cli init-db
+
+# Load fixture data into PostgreSQL
+python -m prism.cli seed
 ```
 
 Use **Rich** for output formatting:
@@ -690,7 +786,9 @@ Use **Rich** for output formatting:
 
 ## Testing Strategy
 
-### What to Test
+**213 tests passing across 12 test files.**
+
+### Phase 0 Tests (91 tests)
 
 1. **Signal decay function** — Unit tests with known dates, verify decay curves match expected values
 2. **Scoring engine** — Unit tests with fixture accounts, verify score calculations and tier assignments
@@ -698,10 +796,22 @@ Use **Rich** for output formatting:
 4. **JSON parsing** — Test handling of malformed LLM responses
 5. **Graceful degradation** — Test with intentionally sparse fixture data
 
-### What NOT to Test (Phase 0)
+### v1 Tests (122 tests)
+
+1. **LLMBackend** — TokenBudget enforcement, LLMResponse, strip_code_fences, MockBackend, ModelRouter, factory function, Pipeline integration
+2. **DB models** — SQLAlchemy ORM model construction for all 9 tables
+3. **Converters** — Pydantic-to-dict conversion for accounts, contacts, signals, content items
+4. **DAL** — FixtureDAL read operations, interface contract, factory function
+5. **API** — FastAPI endpoint tests (health, accounts, signals, content, dossiers, auth middleware)
+6. **Extraction** — All typed_data models, signal type mapping, tech detection from text, HTML preprocessing
+7. **Enrichment** — EnrichmentResult, source interface, job board processing (finance/tech signal detection), orchestrator (source execution, failure handling, counting)
+8. **Tasks** — Worker settings, task function imports, enrich/analyze/dossier tasks with real fixture data
+
+### What NOT to Test
 
 - LLM output quality (evaluated manually by reading dossiers)
 - Blog scraper against live websites (too fragile for CI)
+- DatabaseDAL against live PostgreSQL (requires running DB — use FixtureDAL for unit tests)
 - End-to-end pipeline (manual evaluation)
 
 ---
@@ -724,12 +834,37 @@ Use **Rich** for output formatting:
 ## Environment Variables
 
 ```bash
+# ─── Core (Phase 0) ─────────────────────────────────
 ANTHROPIC_API_KEY=sk-ant-...
 PRISM_MODEL=claude-sonnet-4-20250514
 PRISM_PROMPT_VERSION=v1
 PRISM_MAX_CORPUS_ITEMS=30
 PRISM_MAX_PERSON_POSTS=20
 PRISM_LOG_LEVEL=INFO
+
+# ─── v1: Database ───────────────────────────────────
+DATABASE_URL=postgresql://prism:prism@localhost:5432/prism
+
+# ─── v1: API ────────────────────────────────────────
+API_HOST=0.0.0.0
+API_PORT=8000
+API_KEYS=key1,key2                    # Comma-separated valid API keys
+CORS_ORIGINS=http://localhost:3000    # Comma-separated CORS origins
+
+# ─── v1: LLM Backend ───────────────────────────────
+LLM_BACKEND=anthropic                 # anthropic | local | router
+LLM_LOCAL_URL=http://localhost:8080/v1
+LLM_LOCAL_MODEL=glm-4-9b
+LLM_MAX_SPEND_USD=100.0              # Daily budget cap
+
+# ─── v1: Enrichment API Keys (all optional) ────────
+APOLLO_API_KEY=
+CRUNCHBASE_API_KEY=
+BUILTWITH_API_KEY=
+PROXYCURL_API_KEY=
+
+# ─── v1: Task Queue (optional) ─────────────────────
+REDIS_URL=redis://localhost:6379
 ```
 
 ---
