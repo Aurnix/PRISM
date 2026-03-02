@@ -44,14 +44,16 @@ v1 upgrades PRISM from a CLI demo to an operational tool. Full architecture spec
 
 ### v1 Key Additions
 
-- **PostgreSQL + SQLAlchemy** — Persistent storage for accounts, analyses, dossiers
+- **PostgreSQL + SQLAlchemy** — Persistent storage across 9 tables (raw_responses, accounts, contacts, linkedin_posts, content_items, signals, analyses, dossiers, enrichment_log)
 - **Data Access Layer (DAL)** — Abstract interface with Database and Fixture implementations
 - **LLM Backend abstraction** — Swappable between Claude API and local inference (vLLM/SGLang on Mac Studio cluster with open-source models like GLM-5)
+- **Extraction pipeline** — Multi-path preprocessing (trafilatura + HTML parser + pattern library) → LLM extraction → structured signals with typed_data
 - **FastAPI endpoints** — REST API for account management, analysis triggering, dossier retrieval
-- **Enrichment services** — Pluggable data sources (Apollo, Crunchbase, job board scrapers, Proxycurl)
+- **Collection-first data strategy** — Own the data pipeline (blog scraping, job boards, press) before depending on third-party enrichment
+- **Enrichment services** — Pluggable data sources (Apollo, BuiltWith, Crunchbase, Proxycurl) added as supplements
 - **Task queue** — Background analysis with arq + Redis
 - **Scheduled re-analysis** — Daily/weekly re-scoring as signals decay and new ones appear
-- **Discovery pipeline** — Auto-find ICP-matching companies from enrichment APIs
+- **Discovery pipeline** — Auto-find ICP-matching companies
 
 ### v1 Does NOT Include
 
@@ -67,9 +69,13 @@ v1 upgrades PRISM from a CLI demo to an operational tool. Full architecture spec
 The four load-bearing interfaces are fully specified in `docs/V1_BUILD_PLAN.md`:
 
 1. **`LLMBackend`** — Abstract LLM interface with `AnthropicBackend` and `LocalInferenceBackend` implementations
-2. **Database schema** — 7 PostgreSQL tables (accounts, contacts, linkedin_posts, signals, content_items, analyses, dossiers)
+2. **Database schema** — 9 PostgreSQL tables (raw_responses, accounts, contacts, linkedin_posts, content_items, signals, analyses, dossiers, enrichment_log)
 3. **`DataAccessLayer`** — Abstract DAL with `DatabaseDAL` and `FixtureDAL` implementations
 4. **`EnrichmentSource`** — Pluggable enrichment interface with orchestrator
+
+The extraction pipeline contract is specified in `docs/PRISM_Extraction_Schema_v1.md`.
+
+The build order is in `V1_ROADMAP.md` (9 phases: Foundation → Persistence → API → Extraction → Collection → Enrichment → Task Queue → Discovery → Frontend).
 
 ### Phase 0 Data Strategy
 

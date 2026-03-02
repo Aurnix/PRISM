@@ -303,14 +303,34 @@ class ContentIntelligenceChain:
 
 ### Design Principles
 
-- **JSONB for semi-structured data.** Firmographics, tech_stack, stage results, and scores are stored as JSONB columns. This avoids schema explosions and lets the Pydantic models evolve without migrations.
-- **Append-only for signals.** New signals are added; old ones are never deleted. Decay handles relevance naturally.
+- **9 tables total** — raw_responses, accounts, contacts, linkedin_posts, content_items, signals, analyses, dossiers, enrichment_log.
+- **Two storage layers** — Raw (audit trail, enables reprocessing) + Normalized (analysis input).
+- **JSONB for semi-structured data.** Firmographics, tech_stack, stage results, scores, and signal typed_data are stored as JSONB columns. This avoids schema explosions and lets the Pydantic models evolve without migrations.
+- **Append-only where it matters.** content_items, signals, and analyses are append-only. Old signals are never deleted — decay handles relevance naturally. Old content gets status changes (active → gone/changed), not deletion.
 - **One row per analysis run.** Full history preserved. Every dossier links to the analysis that produced it.
 - **UUIDs for primary keys.** No auto-increment integers leaking into URLs.
 
 ### Tables
 
 ```sql
+-- ─── raw_responses ────────────────────────────────────────────
+-- Audit trail. Append-only. Enables reprocessing when extraction prompts improve.
+CREATE TABLE raw_responses (
+    id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    account_id          UUID REFERENCES accounts(id) ON DELETE SET NULL,
+    source_type         TEXT NOT NULL,       -- 'blog', 'job_board', 'press', 'api_response'
+    url                 TEXT,
+    fetched_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    http_status         INTEGER,
+    raw_headers         JSONB,
+    raw_body            TEXT,                -- Full HTML or JSON response
+    response_size_bytes INTEGER,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_raw_responses_account ON raw_responses(account_id);
+CREATE INDEX idx_raw_responses_url ON raw_responses(url);
+
 -- ─── accounts ──────────────────────────────────────────────────
 CREATE TABLE accounts (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -366,41 +386,63 @@ CREATE INDEX idx_linkedin_posts_contact ON linkedin_posts(contact_id);
 
 -- ─── signals ───────────────────────────────────────────────────
 CREATE TABLE signals (
-    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    account_id      UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
-    signal_type     TEXT NOT NULL,
-    description     TEXT NOT NULL,
-    source          TEXT NOT NULL DEFAULT 'manual',
-    detected_date   DATE NOT NULL,
-    confidence      TEXT NOT NULL DEFAULT 'extracted',
-    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE(account_id, signal_type, detected_date, md5(description))
+    id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    account_id          UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    signal_type         TEXT NOT NULL,
+    signal_category     TEXT,                -- 'financial', 'hiring', 'technology', 'organizational', 'competitive', 'absence'
+    summary             TEXT NOT NULL,
+    evidence            TEXT,                -- Supporting text/quotes
+    typed_data          JSONB,               -- Schema varies by signal_type (discriminated unions)
+    source              TEXT NOT NULL DEFAULT 'manual',
+    detected_date       DATE NOT NULL,
+    event_date          DATE,                -- When the event actually happened (may differ from detection)
+    confidence          TEXT NOT NULL DEFAULT 'extracted',  -- 'extracted' | 'interpolated' | 'inferred'
+    source_content_ids  UUID[],              -- Which content_items this signal was derived from
+    decay_profile       TEXT,                -- References SIGNAL_DECAY_CONFIG key
+    is_active           BOOLEAN NOT NULL DEFAULT TRUE,
+    status              TEXT NOT NULL DEFAULT 'active',  -- 'active' | 'resolved' | 'superseded' | 'expired'
+    superseded_by       UUID REFERENCES signals(id),
+    raw_response_id     UUID REFERENCES raw_responses(id),
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(account_id, signal_type, detected_date, md5(summary))
 );
 
 CREATE INDEX idx_signals_account ON signals(account_id);
 CREATE INDEX idx_signals_type ON signals(signal_type);
 CREATE INDEX idx_signals_date ON signals(detected_date);
+CREATE INDEX idx_signals_active ON signals(account_id, is_active) WHERE is_active = TRUE;
 
 -- ─── content_items ─────────────────────────────────────────────
 CREATE TABLE content_items (
-    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    account_id      UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
-    source_type     TEXT NOT NULL,  -- blog | linkedin | press | job_posting
-    url             TEXT,
-    title           TEXT,
-    author          TEXT,
-    author_role     TEXT,
-    publish_date    DATE NOT NULL,
-    raw_text        TEXT NOT NULL,
-    word_count      INT,
-    is_authored     BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE(account_id, source_type, publish_date, md5(raw_text))
+    id                      UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    account_id              UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    source_type             TEXT NOT NULL,       -- 'blog_post', 'press_release', 'job_listing', 'news_article'
+    content_category        TEXT,                -- 'technical', 'hiring', 'financial', 'thought_leadership', 'product', 'company_news'
+    relevance               TEXT DEFAULT 'medium', -- 'high', 'medium', 'low'
+    url                     TEXT,
+    title                   TEXT,
+    author                  TEXT,
+    author_role             TEXT,
+    publish_date            DATE NOT NULL,
+    body_text               TEXT NOT NULL,
+    word_count              INT,
+    is_authored             BOOLEAN NOT NULL DEFAULT FALSE,
+    extracted_data          JSONB,               -- Full ExtractionResult from extraction pipeline
+    extraction_model        TEXT,                -- Which LLM model extracted this
+    extraction_confidence   FLOAT,               -- 0.0-1.0 extraction quality
+    first_seen              TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    last_seen               TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    status                  TEXT NOT NULL DEFAULT 'active',  -- 'active', 'gone', 'redirected', 'changed'
+    raw_response_id         UUID REFERENCES raw_responses(id),
+    created_at              TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at              TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(account_id, source_type, publish_date, md5(body_text))
 );
 
 CREATE INDEX idx_content_account ON content_items(account_id);
 CREATE INDEX idx_content_type ON content_items(source_type);
 CREATE INDEX idx_content_date ON content_items(publish_date);
+CREATE INDEX idx_content_status ON content_items(account_id, status) WHERE status = 'active';
 
 -- ─── analyses ──────────────────────────────────────────────────
 CREATE TABLE analyses (
@@ -683,6 +725,27 @@ class DataAccessLayer(ABC):
         """Get most recent dossier for an account."""
         ...
 
+    # ─── Raw Responses ───────────────────────────────────────────
+
+    @abstractmethod
+    async def write_raw_response(
+        self,
+        account_id: Optional[UUID],
+        source_type: str,
+        url: Optional[str],
+        http_status: Optional[int],
+        raw_headers: Optional[dict],
+        raw_body: Optional[str],
+        response_size_bytes: Optional[int] = None,
+    ) -> UUID:
+        """Store raw HTTP response for audit/reprocessing. Returns response ID."""
+        ...
+
+    @abstractmethod
+    async def get_raw_response(self, response_id: UUID) -> Optional[dict]:
+        """Retrieve raw response by ID for reprocessing."""
+        ...
+
     # ─── Enrichment Log ─────────────────────────────────────────
 
     @abstractmethod
@@ -694,6 +757,41 @@ class DataAccessLayer(ABC):
         items_added: int = 0,
         error: Optional[str] = None,
     ) -> None:
+        ...
+
+    # ─── Scheduler Queries ───────────────────────────────────────
+
+    @abstractmethod
+    async def get_accounts_for_reanalysis(
+        self, max_signal_age_days: int = 7
+    ) -> list[Account]:
+        """Get active accounts with signals newer than max_signal_age_days."""
+        ...
+
+    @abstractmethod
+    async def get_stale_accounts(
+        self, stale_after_days: int = 30
+    ) -> list[Account]:
+        """Get active accounts not analyzed in stale_after_days."""
+        ...
+
+    @abstractmethod
+    async def get_account_by_domain(self, domain: str) -> Optional[Account]:
+        """Look up account by domain (needed for enrichment)."""
+        ...
+
+    # ─── Content Queries ─────────────────────────────────────────
+
+    @abstractmethod
+    async def get_content_by_url(self, url: str) -> Optional[ContentItem]:
+        """Check if content already exists by URL (deduplication)."""
+        ...
+
+    @abstractmethod
+    async def update_content_status(
+        self, content_id: UUID, status: str
+    ) -> None:
+        """Update content item status (active → gone/redirected/changed)."""
         ...
 ```
 
