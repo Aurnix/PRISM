@@ -26,10 +26,10 @@ These are signals that keyword matching and traditional NLP cannot detect.
 │                         PRISM v1 Pipeline                            │
 │                                                                      │
 │  DATA LAYER                                                          │
-│  ┌───────────┐  ┌──────────┐  ┌──────────┐  ┌────────────┐           │
-│  │ Fixture   │  │  Blog    │  │ Job Board│  │  Apollo    │           │
-│  │ Data      │  │ Scraper  │  │ Scraper  │  │  API      │            │
-│  └─────┬─────┘  └────┬─────┘  └────┬─────┘  └─────┬──────┘           │
+│  ┌───────────┐   ┌──────────┐  ┌──────────┐  ┌────────────┐          │
+│  │ Fixture   │   │  Blog    │  │ Job Board│  │  Apollo    │          │
+│  │ Data      │   │ Scraper  │  │ Scraper  │  │  API       │          │
+│  └─────┬─────┘   └────┬─────┘  └────┬─────┘  └─────┬──────┘          │
 │        └──────────────┴─────────────┴──────────────┘                 │
 │                               │                                      │
 │              ┌────────────────▼────────────────┐                     │
@@ -61,10 +61,10 @@ These are signals that keyword matching and traditional NLP cannot detect.
 │                     │                                                │
 │  OUTPUT LAYER       ▼                                                │
 │  ┌──────────────────────────────────────────────┐                    │
-│  │  Dossier Generator  │  REST API  │  CLI     │                    │
+│  │  Dossier Generator  │  REST API  │  CLI      │                    │
 │  └──────────────────────────────────────────────┘                    │
 │                                                                      │
-│  PERSISTENCE: PostgreSQL (9 tables) ← DAL ← SQLAlchemy async        │
+│  PERSISTENCE: PostgreSQL (9 tables) ← DAL ← SQLAlchemy async         │
 │  LLM BACKEND: Claude API │ Local Inference (vLLM/SGLang)             │
 │  TASK QUEUE: arq + Redis (optional)                                  │
 └──────────────────────────────────────────────────────────────────────┘
