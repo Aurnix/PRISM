@@ -347,6 +347,142 @@ async def _analyze_company(
     ))
 
 
+@cli.command()
+@click.argument("slug")
+def enrich(slug: str) -> None:
+    """Run all available enrichment sources for a company."""
+    asyncio.run(_enrich_company(slug))
+
+
+@cli.command()
+@click.option("--host", default="0.0.0.0", help="API host")
+@click.option("--port", default=8000, type=int, help="API port")
+def serve(host: str, port: int) -> None:
+    """Start the PRISM API server."""
+    import uvicorn
+
+    from prism.api import create_app
+
+    app = create_app()
+    console.print(f"[bold]Starting PRISM API server on {host}:{port}[/bold]")
+    uvicorn.run(app, host=host, port=port, log_level="info")
+
+
+@cli.command()
+def seed() -> None:
+    """Load all fixture data into PostgreSQL via DAL."""
+    asyncio.run(_seed_database())
+
+
+@cli.command(name="init-db")
+def init_db() -> None:
+    """Create all database tables (dev only — use Alembic in production)."""
+    asyncio.run(_init_database())
+
+
+async def _init_database() -> None:
+    """Create all database tables."""
+    from prism.db.session import create_tables
+    console.print("Creating database tables...")
+    await create_tables()
+    console.print("[green]Database tables created.[/green]")
+
+
+async def _seed_database() -> None:
+    """Seed database from fixture files."""
+    from prism.data.loader import (
+        list_companies as _list_companies,
+        load_account,
+        load_additional_content,
+        load_contacts,
+        load_signals,
+    )
+    from prism.db.session import get_session_factory
+
+    factory = get_session_factory()
+
+    slugs = _list_companies()
+    if not slugs:
+        console.print("[yellow]No companies found in fixtures/companies/[/yellow]")
+        return
+
+    console.print(f"\n[bold]Seeding {len(slugs)} companies into database...[/bold]\n")
+
+    async with factory() as session:
+        from prism.data.database_dal import DatabaseDAL
+        dal = DatabaseDAL(session)
+
+        for slug in slugs:
+            account = load_account(slug)
+            if not account:
+                console.print(f"  [red]Skip {slug}: could not load[/red]")
+                continue
+
+            account_id = await dal.upsert_account(account)
+
+            contacts = load_contacts(slug)
+            for contact in contacts:
+                contact_id = await dal.upsert_contact(account_id, contact)
+                if contact.linkedin_posts:
+                    await dal.add_linkedin_posts(contact_id, contact.linkedin_posts)
+
+            signals = load_signals(slug)
+            if signals:
+                await dal.add_signals(account_id, signals)
+
+            content = load_additional_content(slug)
+            if content:
+                await dal.add_content(account_id, content)
+
+            console.print(
+                f"  [green]✓[/green] {account.company_name}: "
+                f"{len(contacts)} contacts, {len(signals)} signals, {len(content)} content items"
+            )
+
+    console.print(f"\n[bold green]Seeded {len(slugs)} companies.[/bold green]")
+
+
+async def _enrich_company(slug: str) -> None:
+    """Run enrichment for a single company."""
+    from prism.data.loader import load_account
+    from prism.services.enrichment.orchestrator import EnrichmentOrchestrator
+
+    account = load_account(slug)
+    if not account:
+        console.print(f"[red]Company '{slug}' not found in fixtures[/red]")
+        return
+
+    console.print(Panel(
+        f"[bold]Enriching: {account.company_name}[/bold] ({account.domain})",
+        title="PRISM Enrichment",
+    ))
+
+    from prism.data import get_dal
+    dal = get_dal()
+    orchestrator = EnrichmentOrchestrator(dal)
+
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        console=console,
+    ) as progress:
+        task = progress.add_task("Running enrichment sources...", total=None)
+        summary = await orchestrator.enrich_company(account.domain, slug=slug)
+        progress.update(task, description="Enrichment complete")
+
+    table = Table(title="Enrichment Summary")
+    table.add_column("Source")
+    table.add_column("Results")
+
+    for source_name, counts in summary.items():
+        if isinstance(counts, dict) and "error" in counts:
+            table.add_row(source_name, f"[red]Error: {counts['error']}[/red]")
+        else:
+            table.add_row(source_name, str(counts))
+
+    console.print(table)
+
+
 async def _analyze_all(no_scrape: bool = False, no_llm: bool = False) -> None:
     """Analyze all companies."""
     from prism.data.loader import list_companies as _list_companies
