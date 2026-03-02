@@ -22,32 +22,52 @@ These are signals that keyword matching and traditional NLP cannot detect.
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        PRISM Pipeline                          │
-│                                                                 │
-│  ┌──────────┐    ┌──────────────────────────────────────────┐  │
-│  │ Fixture  │    │     Content Intelligence Chain           │  │
-│  │  Data    │───▶│                                          │  │
-│  │ (JSON)   │    │  Stage 1: Per-Item Extraction            │  │
-│  └──────────┘    │     ▼ (parallelized per content item)    │  │
-│                  │  Stage 2: Cross-Corpus Synthesis          │  │
-│  ┌──────────┐    │     ▼                                    │  │
-│  │  Blog    │───▶│  Stage 3: Person-Level Analysis          │  │
-│  │ Scraper  │    │     ▼ (per buying committee member)      │  │
-│  └──────────┘    │  Stage 4: Synthesis & Composite Scoring  │  │
-│                  └──────────────┬───────────────────────────┘  │
-│                                 │                               │
-│                  ┌──────────────▼───────────────────────────┐  │
-│                  │       Scoring Engine                     │  │
-│                  │  ICP Fit + Buying Readiness + Timing     │  │
-│                  │  → Composite Score → Tier Assignment     │  │
-│                  └──────────────┬───────────────────────────┘  │
-│                                 │                               │
-│                  ┌──────────────▼───────────────────────────┐  │
-│                  │       Dossier Generator                  │  │
-│                  │  Markdown intelligence brief             │  │
-│                  └─────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                         PRISM v1 Pipeline                            │
+│                                                                      │
+│  DATA LAYER                                                          │
+│  ┌───────────┐  ┌──────────┐  ┌──────────┐  ┌────────────┐         │
+│  │ Fixture   │  │  Blog    │  │ Job Board│  │  Apollo    │         │
+│  │ Data      │  │ Scraper  │  │ Scraper  │  │  API      │         │
+│  └─────┬─────┘  └────┬─────┘  └────┬─────┘  └─────┬──────┘         │
+│        └──────────────┴─────────────┴──────────────┘                 │
+│                               │                                      │
+│              ┌────────────────▼────────────────┐                     │
+│              │   Enrichment Orchestrator       │                     │
+│              │   (pluggable sources)           │                     │
+│              └────────────────┬────────────────┘                     │
+│                               │                                      │
+│  EXTRACTION LAYER             ▼                                      │
+│  ┌──────────────────────────────────────────────┐                    │
+│  │  Multi-Path Extraction                       │                    │
+│  │  HTML parser + pattern library + LLM         │                    │
+│  │  → structured signals with typed_data        │                    │
+│  └──────────────────┬───────────────────────────┘                    │
+│                     │                                                │
+│  ANALYSIS LAYER     ▼                                                │
+│  ┌──────────────────────────────────────────────┐                    │
+│  │  Content Intelligence Chain (4-stage LLM)    │                    │
+│  │  Stage 1: Per-Item Extraction                │                    │
+│  │  Stage 2: Cross-Corpus Synthesis             │                    │
+│  │  Stage 3: Person-Level Analysis              │                    │
+│  │  Stage 4: Synthesis & Composite Scoring      │                    │
+│  └──────────────────┬───────────────────────────┘                    │
+│                     │                                                │
+│  SCORING LAYER      ▼                                                │
+│  ┌──────────────────────────────────────────────┐                    │
+│  │  ICP Fit + Buying Readiness + Timing         │                    │
+│  │  → Composite Score → Tier Assignment         │                    │
+│  └──────────────────┬───────────────────────────┘                    │
+│                     │                                                │
+│  OUTPUT LAYER       ▼                                                │
+│  ┌──────────────────────────────────────────────┐                    │
+│  │  Dossier Generator  │  REST API  │  CLI     │                    │
+│  └──────────────────────────────────────────────┘                    │
+│                                                                      │
+│  PERSISTENCE: PostgreSQL (9 tables) ← DAL ← SQLAlchemy async        │
+│  LLM BACKEND: Claude API │ Local Inference (vLLM/SGLang)             │
+│  TASK QUEUE: arq + Redis (optional)                                  │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -178,6 +198,7 @@ cp .env.example .env
 ### Usage
 
 ```bash
+# ─── Analysis (Phase 0 + v1) ─────────────────────────
 # List available demo companies
 python -m prism.cli list
 
@@ -198,9 +219,45 @@ python -m prism.cli estimate velocitypay
 
 # View current scoring weights
 python -m prism.cli weights
+
+# ─── Enrichment (v1) ─────────────────────────────────
+# Run all enrichment sources for a company
+python -m prism.cli enrich velocitypay
+
+# ─── API Server (v1) ─────────────────────────────────
+# Start the REST API server
+python -m prism.cli serve
+
+# ─── Database (v1, requires PostgreSQL) ──────────────
+# Create all database tables
+python -m prism.cli init-db
+
+# Load fixture data into PostgreSQL
+python -m prism.cli seed
 ```
 
 Dossiers are saved to `output/dossiers/<slug>_dossier.md`.
+
+### REST API (v1)
+
+When running with `python -m prism.cli serve`, the following endpoints are available:
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| `GET` | `/health` | Liveness check |
+| `GET` | `/accounts` | List all tracked companies |
+| `POST` | `/accounts` | Add a company |
+| `GET` | `/accounts/{slug}` | Full account detail |
+| `PATCH` | `/accounts/{slug}` | Update account |
+| `DELETE` | `/accounts/{slug}` | Archive (soft delete) |
+| `POST` | `/accounts/{slug}/analyze` | Trigger analysis |
+| `POST` | `/accounts/{slug}/enrich` | Trigger enrichment |
+| `GET` | `/accounts/{slug}/signals` | List signals with decay weights |
+| `POST` | `/accounts/{slug}/content` | Upload content |
+| `GET` | `/accounts/{slug}/dossier` | Latest dossier |
+| `GET` | `/dossiers/{dossier_id}` | Retrieve dossier by ID |
+
+All endpoints require `X-API-Key` header. Configure valid keys via `API_KEYS` env var.
 
 ### Running Tests
 
@@ -215,33 +272,66 @@ pytest tests/
 ```
 prism/
 ├── prism/
-│   ├── cli.py                 # Click CLI entry point
-│   ├── config.py              # All weights, thresholds, decay parameters
+│   ├── cli.py                 # Click CLI (analyze, enrich, serve, seed, init-db)
+│   ├── config.py              # All weights, thresholds, decay parameters, env config
+│   ├── pipeline.py            # [v1] Shared analysis orchestration
+│   ├── tasks.py               # [v1] Background tasks + arq worker
+│   │
 │   ├── models/                # Pydantic v2 data models
 │   │   ├── account.py         # Account, firmographics
 │   │   ├── contact.py         # Contacts, buying committee
 │   │   ├── content.py         # Content items, corpus
 │   │   ├── signal.py          # Signals, decay config
 │   │   ├── analysis.py        # Analysis results, scores, hypotheses
-│   │   └── activation.py      # Plays, angles, account briefs
+│   │   ├── activation.py      # Plays, angles, account briefs
+│   │   └── extraction.py      # [v1] Signal typed_data schemas
+│   │
 │   ├── analysis/              # Core analysis engines
 │   │   ├── content_intel.py   # 4-stage LLM analysis chain
 │   │   ├── scoring.py         # ICP fit, readiness, timing, composite
 │   │   └── signal_decay.py    # Temporal decay weighting
+│   │
 │   ├── services/              # External integrations
-│   │   ├── llm.py             # Claude API wrapper (retry, cost tracking)
-│   │   └── scraper.py         # Blog scraper (RSS + HTML fallback)
+│   │   ├── llm_backend.py     # [v1] LLMBackend ABC + budget tracking
+│   │   ├── llm.py             # Legacy Claude API wrapper
+│   │   ├── scraper.py         # Blog scraper (RSS + HTML fallback)
+│   │   ├── extraction.py      # [v1] Multi-path extraction pipeline
+│   │   ├── backends/          # [v1] Swappable LLM implementations
+│   │   │   ├── anthropic_backend.py
+│   │   │   ├── local_backend.py
+│   │   │   └── router.py
+│   │   └── enrichment/        # [v1] Pluggable data enrichment
+│   │       ├── base.py        # EnrichmentSource ABC
+│   │       ├── orchestrator.py
+│   │       ├── blog_scraper.py
+│   │       ├── job_boards.py  # Greenhouse + Lever
+│   │       └── apollo.py
+│   │
+│   ├── api/                   # [v1] FastAPI REST API
+│   │   ├── deps.py            # Dependency injection
+│   │   ├── schemas.py         # Request/response models
+│   │   └── routes.py          # All endpoints
+│   │
+│   ├── db/                    # [v1] SQLAlchemy persistence
+│   │   ├── models.py          # 9 ORM tables
+│   │   ├── session.py         # Async engine + sessions
+│   │   └── converters.py      # Pydantic <-> SQLAlchemy
+│   │
+│   ├── data/                  # Data access layer
+│   │   ├── dal.py             # [v1] DAL abstract interface
+│   │   ├── database_dal.py    # [v1] PostgreSQL implementation
+│   │   ├── fixture_dal.py     # [v1] Fixture fallback
+│   │   ├── loader.py          # Phase 0 fixture loader
+│   │   └── product.py         # Ledgerflow product definition
+│   │
 │   ├── prompts/v1/            # Versioned prompt templates
-│   ├── output/
-│   │   └── dossier.py         # Markdown dossier renderer
-│   └── data/
-│       ├── loader.py          # Fixture data loader
-│       └── product.py         # Ledgerflow product definition
-├── fixtures/
-│   ├── companies/             # One JSON file per demo company
-│   └── scraped_content/       # Cached blog scrapes
-├── output/dossiers/           # Generated dossier markdown files
-└── tests/                     # pytest test suite
+│   └── output/
+│       └── dossier.py         # Markdown dossier renderer
+│
+├── fixtures/                  # Demo company data (10 companies)
+├── output/dossiers/           # Generated dossier files
+├── docs/                      # Architecture & spec documents
+└── tests/                     # 213 tests across 12 files
 ```
 
 ---
@@ -260,20 +350,31 @@ All scoring weights, thresholds, and parameters are centralized in `prism/config
 | `PRISM_MAX_CORPUS_ITEMS` | `30` | Max content items per company |
 | `PRISM_MAX_PERSON_POSTS` | `20` | Max LinkedIn posts per person |
 | `PRISM_LOG_LEVEL` | `INFO` | Logging level |
+| `DATABASE_URL` | — | PostgreSQL connection string (v1) |
+| `API_KEYS` | — | Comma-separated valid API keys (v1) |
+| `LLM_BACKEND` | `anthropic` | `anthropic`, `local`, or `router` (v1) |
+| `LLM_MAX_SPEND_USD` | `100.0` | Daily LLM budget cap (v1) |
+| `APOLLO_API_KEY` | — | Optional Apollo enrichment (v1) |
+| `REDIS_URL` | — | Optional Redis for task queue (v1) |
 
 ---
 
 ## Tech Stack
 
+**Core:**
 - **Python 3.11+** with type hints throughout
 - **Pydantic v2** — all data models with validation
 - **Anthropic SDK** — Claude API for Content Intelligence chain
-- **httpx** — async HTTP for blog scraping and API calls
-- **BeautifulSoup4** — HTML parsing for blog content extraction
-- **Click** — CLI framework
-- **Rich** — terminal formatting, progress bars, colored output
-- **python-dotenv** — environment variable management
-- **pytest** — test suite
+- **httpx** — async HTTP for scraping, API calls, enrichment
+- **BeautifulSoup4** — HTML parsing for content extraction
+- **Click** + **Rich** — CLI with progress bars and colored output
+- **pytest** — 213 tests
+
+**v1 Additions:**
+- **SQLAlchemy 2.0** (async) — ORM with 9 PostgreSQL tables
+- **asyncpg** — PostgreSQL async driver
+- **FastAPI** + **uvicorn** — REST API server
+- **arq** + **Redis** — background task queue (optional)
 
 ---
 
@@ -285,18 +386,33 @@ The full analysis pipeline for 10 companies costs approximately **$5-10** in Cla
 
 ## Current Phase & Roadmap
 
-**Phase 0 — Portfolio Demo** (current). Full Content Intelligence pipeline running against 10 demo companies with fixture data. CLI-only, no persistence, no live data ingestion. The core analysis chain, scoring engine, signal decay, and dossier renderer are production-quality.
+**v1 — Operational Tool** (in progress, Phases 1-7 complete). The system now supports swappable LLM backends, persistent PostgreSQL storage, a full REST API, multi-path extraction, pluggable enrichment sources, and background task processing. 213 tests passing.
 
-**v1 — Operational Tool** (planned). Add a company by domain, auto-enrich from live data sources, persist everything to PostgreSQL, serve dossiers via FastAPI, re-analyze on a schedule. Designed for swappable LLM backends — Claude API for dev, self-hosted open-source model (GLM-5 or similar on Mac Studio cluster) for production inference.
+### v1 Build Status
 
-v1 architecture is fully spec'd in [`docs/V1_BUILD_PLAN.md`](docs/V1_BUILD_PLAN.md). Key interfaces:
+| Phase | Name | Status |
+|-------|------|--------|
+| 1 | Foundation (LLM Backend Abstraction) | **Complete** |
+| 2 | Persistence (PostgreSQL + DAL) | **Complete** |
+| 3 | API Layer (FastAPI) | **Complete** |
+| 4 | Extraction Pipeline | **Complete** |
+| 5 | Collection & Enrichment | **Complete** |
+| 6 | Third-Party Enrichment (Apollo) | **Complete** |
+| 7 | Task Queue & Scheduling | **Complete** |
+| 8 | Discovery Pipeline | Planned |
+| 9 | Frontend (Streamlit/Next.js) | Planned |
 
-- **LLM Backend** — Abstract interface supporting Anthropic API and local inference (vLLM/SGLang)
-- **Data Access Layer** — Database-backed persistence with fixture fallback for dev
-- **Enrichment Services** — Pluggable data sources (Apollo, Crunchbase, job boards, blog scraping)
-- **REST API** — FastAPI endpoints for account management, analysis triggering, and dossier retrieval
+### Key v1 Interfaces
 
-See also: [`V1_ROADMAP.md`](V1_ROADMAP.md) for the phase-by-phase build order.
+- **`LLMBackend`** — Abstract LLM interface with `AnthropicBackend` (Claude API) and `LocalInferenceBackend` (vLLM/SGLang). `ModelRouter` for mixed-model strategies.
+- **`DataAccessLayer`** — Abstract DAL with `DatabaseDAL` (PostgreSQL) and `FixtureDAL` (JSON fixture fallback).
+- **`EnrichmentSource`** — Pluggable enrichment with blog scraper, job board (Greenhouse/Lever), and Apollo adapters. `EnrichmentOrchestrator` runs all available sources.
+- **REST API** — FastAPI with 12 endpoints for account management, analysis, enrichment, and dossier retrieval.
+- **Task Queue** — arq-compatible task functions for background enrichment, analysis, and scheduled re-processing.
+
+**Phase 0 — Portfolio Demo** (complete). The foundation: Content Intelligence pipeline, scoring engine, signal decay, dossier renderer, 10 demo companies with fixture data.
+
+See [`docs/V1_BUILD_PLAN.md`](docs/V1_BUILD_PLAN.md) for full architecture spec and [`V1_ROADMAP.md`](V1_ROADMAP.md) for the phase-by-phase build order.
 
 ---
 
