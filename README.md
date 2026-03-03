@@ -257,7 +257,11 @@ When running with `python -m prism.cli serve`, the following endpoints are avail
 | `GET` | `/accounts/{slug}/dossier` | Latest dossier |
 | `GET` | `/dossiers/{dossier_id}` | Retrieve dossier by ID |
 
-All endpoints require `X-API-Key` header. Configure valid keys via `API_KEYS` env var.
+All endpoints require `X-API-Key` header. Configure valid keys via `API_KEYS` env var. If `API_KEYS` is unset, auth is bypassed (a warning is logged on each request).
+
+**Slug format:** All `{slug}` path parameters must match `^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$`.
+
+**Content upload:** `source_type` must be one of: `blog`, `linkedin`, `job_posting`, `press`, `news`, `earnings`, `glassdoor`. Max `raw_text` length is 1MB. Pagination: `limit` 1-1000, `offset` >= 0.
 
 ### Running Tests
 
@@ -351,7 +355,7 @@ All scoring weights, thresholds, and parameters are centralized in `prism/config
 | `PRISM_MAX_PERSON_POSTS` | `20` | Max LinkedIn posts per person |
 | `PRISM_LOG_LEVEL` | `INFO` | Logging level |
 | `DATABASE_URL` | — | PostgreSQL connection string (v1) |
-| `API_KEYS` | — | Comma-separated valid API keys (v1) |
+| `API_KEYS` | — | Comma-separated valid API keys; if unset auth is bypassed with warning (v1) |
 | `LLM_BACKEND` | `anthropic` | `anthropic`, `local`, or `router` (v1) |
 | `LLM_MAX_SPEND_USD` | `100.0` | Daily LLM budget cap (v1) |
 | `APOLLO_API_KEY` | — | Optional Apollo enrichment (v1) |
