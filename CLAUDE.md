@@ -63,7 +63,7 @@ v1 upgrades PRISM from a CLI demo to an operational tool. Full architecture spec
 - **`LLMBackend` abstraction** (`prism/services/llm_backend.py`) — Swappable between Claude API (`AnthropicBackend`) and local inference (`LocalInferenceBackend` for vLLM/SGLang). `ModelRouter` for mixed-model strategies. Token/cost budget enforcement.
 - **PostgreSQL + SQLAlchemy** (`prism/db/`) — 9 async ORM tables with UUID PKs, JSONB columns, proper indexes and relationships. Async engine via `asyncpg`.
 - **Data Access Layer** (`prism/data/dal.py`) — Abstract interface with `DatabaseDAL` (full PostgreSQL CRUD) and `FixtureDAL` (read-only wrapper around fixture JSON).
-- **FastAPI REST API** (`prism/api/`) — Full REST endpoints: health, accounts CRUD, analysis trigger, signals, content upload, dossier retrieval, enrichment trigger. X-API-Key auth, dependency injection.
+- **FastAPI REST API** (`prism/api/`) — Full REST endpoints: health, accounts CRUD, analysis trigger, signals, content upload, dossier retrieval, enrichment trigger. X-API-Key auth (warns on startup if unconfigured), slug validation, input schema constraints, dependency injection.
 - **Extraction pipeline** (`prism/services/extraction.py`, `prism/models/extraction.py`) — Multi-path preprocessing (HTML parser + pattern library with ~25 tech fingerprints) → LLM extraction → structured signals with typed_data schemas (9 signal data types as Pydantic discriminated unions).
 - **Enrichment system** (`prism/services/enrichment/`) — `EnrichmentSource` ABC with pluggable interface. Implemented sources: `BlogScraperEnrichment`, `JobBoardEnrichment` (Greenhouse + Lever public APIs), `ApolloEnrichment` (contacts + firmographics). `EnrichmentOrchestrator` runs all available sources, merges results, handles failures gracefully.
 - **Task queue** (`prism/tasks.py`) — Background task functions for enrichment, analysis, dossier generation, and full pipeline. Scheduler functions for daily reanalysis and weekly scraping. arq `WorkerSettings` for Redis-backed queue deployment.
@@ -438,7 +438,7 @@ This is where the proprietary analysis happens. Looks for patterns ACROSS docume
 **LLM:** Claude Sonnet  
 **Tokens:** ~5K per person  
 
-Runs for each identified contact with available content. Skip contacts with no public content (flag as "person-level analysis unavailable").
+Runs for each identified contact with available content (max 5 concurrent LLM calls via semaphore). Skip contacts with no public content (flag as "person-level analysis unavailable").
 
 **Per-person outputs:**
 - Individual pain alignment (ahead/behind/aligned with org)
@@ -671,7 +671,7 @@ Log per-company: total input tokens, total output tokens, estimated cost, number
 - Cache scraped content to `fixtures/scraped_content/<slug>/` so we don't re-scrape
 - Respect robots.txt (check before scraping)
 - User-Agent: `PRISM/0.1 (research; +https://github.com/Aurnix/prism)`
-- Rate limit: 1 request per second per domain
+- Rate limit: 1 request per second per domain (enforced with `asyncio.Lock` for concurrency safety)
 - Timeout: 10 seconds per request
 - If scraping fails entirely, log warning and continue with fixture content only
 
@@ -848,7 +848,7 @@ DATABASE_URL=postgresql://prism:prism@localhost:5432/prism
 # ─── v1: API ────────────────────────────────────────
 API_HOST=0.0.0.0
 API_PORT=8000
-API_KEYS=key1,key2                    # Comma-separated valid API keys
+API_KEYS=key1,key2                    # Comma-separated valid API keys (WARNING: if unset, all requests bypass auth)
 CORS_ORIGINS=http://localhost:3000    # Comma-separated CORS origins
 
 # ─── v1: LLM Backend ───────────────────────────────
