@@ -39,6 +39,7 @@ class BlogScraper:
     def __init__(self) -> None:
         self._last_request_time: dict[str, float] = {}
         self._robots_cache: dict[str, Optional[str]] = {}
+        self._rate_lock = asyncio.Lock()
 
     async def scrape(
         self,
@@ -184,7 +185,7 @@ class BlogScraper:
 
             return items[:30]  # Cap at max corpus items
 
-        except Exception as e:
+        except (httpx.HTTPError, ElementTree.ParseError, ValueError, KeyError) as e:
             logger.debug("RSS scrape failed for %s: %s", rss_url, e)
             return []
 
@@ -237,7 +238,7 @@ class BlogScraper:
                         item = self._extract_post(post_soup, link)
                         if item:
                             items.append(item)
-                    except Exception as e:
+                    except (httpx.HTTPError, ValueError, AttributeError) as e:
                         logger.debug("Failed to scrape post %s: %s", link, e)
 
                 # Find next page
@@ -245,7 +246,7 @@ class BlogScraper:
                 if next_link and next_link not in visited:
                     urls_to_scrape.append(next_link)
 
-            except Exception as e:
+            except (httpx.HTTPError, ValueError, AttributeError) as e:
                 logger.debug("Failed to scrape page %s: %s", url, e)
 
         return items[:30]
@@ -407,15 +408,16 @@ class BlogScraper:
 
     async def _rate_limit(self, url: str) -> None:
         """Enforce rate limiting per domain."""
-        domain = urlparse(url).netloc
-        now = time.time()
+        async with self._rate_lock:
+            domain = urlparse(url).netloc
+            now = time.time()
 
-        if domain in self._last_request_time:
-            elapsed = now - self._last_request_time[domain]
-            if elapsed < SCRAPER_RATE_LIMIT:
-                await asyncio.sleep(SCRAPER_RATE_LIMIT - elapsed)
+            if domain in self._last_request_time:
+                elapsed = now - self._last_request_time[domain]
+                if elapsed < SCRAPER_RATE_LIMIT:
+                    await asyncio.sleep(SCRAPER_RATE_LIMIT - elapsed)
 
-        self._last_request_time[domain] = time.time()
+            self._last_request_time[domain] = time.time()
 
     def _load_cache(self, slug: str) -> Optional[list[ContentItem]]:
         """Load cached blog posts."""

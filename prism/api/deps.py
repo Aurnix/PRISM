@@ -36,6 +36,7 @@ async def get_llm_dep() -> LLMBackend:
 async def verify_api_key(x_api_key: str = Header(default="")) -> str:
     """Verify X-API-Key header. Skip if no API keys configured."""
     if not API_KEYS:
+        logger.warning("API_KEYS not configured — all requests are unauthenticated")
         return "no-auth"
     if x_api_key not in API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API key")

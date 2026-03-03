@@ -1,10 +1,11 @@
 """FastAPI routes for PRISM REST API."""
 
 import logging
+import re
 from datetime import date
-from typing import Optional
+from typing import Annotated, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from prism.api.deps import get_dal_dep, get_llm_dep, verify_api_key
 from prism.api.schemas import (
@@ -26,7 +27,19 @@ from prism.services.llm_backend import LLMBackend
 
 logger = logging.getLogger(__name__)
 
+_SLUG_RE = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$")
+
 router = APIRouter(dependencies=[Depends(verify_api_key)])
+
+
+def _validate_slug(slug: str) -> str:
+    """Validate slug is safe for filesystem and database use."""
+    if not _SLUG_RE.match(slug):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid slug: must be alphanumeric with hyphens/underscores, 1-64 chars",
+        )
+    return slug
 
 
 # ─── Health ──────────────────────────────────────────────────────────────────
@@ -46,8 +59,8 @@ async def health() -> HealthResponse:
 @router.get("/accounts", response_model=list[AccountListItem])
 async def list_accounts(
     status: str = "active",
-    limit: int = 100,
-    offset: int = 0,
+    limit: Annotated[int, Query(ge=1, le=1000)] = 100,
+    offset: Annotated[int, Query(ge=0)] = 0,
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> list[AccountListItem]:
     """List tracked companies with latest scores/tiers."""
@@ -72,6 +85,7 @@ async def create_account(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> AccountResponse:
     """Add a company to track."""
+    _validate_slug(body.slug)
     account = Account(
         slug=body.slug,
         company_name=body.company_name,
@@ -103,6 +117,7 @@ async def get_account(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> AccountResponse:
     """Full account detail with latest analysis."""
+    _validate_slug(slug)
     account = await dal.get_account(slug)
     if not account:
         raise HTTPException(status_code=404, detail=f"Account '{slug}' not found")
@@ -125,6 +140,7 @@ async def update_account(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> AccountResponse:
     """Update account data."""
+    _validate_slug(slug)
     account = await dal.get_account(slug)
     if not account:
         raise HTTPException(status_code=404, detail=f"Account '{slug}' not found")
@@ -154,6 +170,7 @@ async def delete_account(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> None:
     """Archive (soft delete) an account."""
+    _validate_slug(slug)
     account = await dal.get_account(slug)
     if not account:
         raise HTTPException(status_code=404, detail=f"Account '{slug}' not found")
@@ -174,6 +191,7 @@ async def trigger_analysis(
     llm: LLMBackend = Depends(get_llm_dep),
 ) -> AnalyzeResponse:
     """Trigger analysis for an account. Runs synchronously in v1."""
+    _validate_slug(slug)
     from prism.data.loader import load_contacts, load_signals, load_additional_content
     from prism.models.content import ContentItem as CI
     from prism.pipeline import AnalysisPipeline
@@ -231,6 +249,7 @@ async def trigger_enrichment(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> dict:
     """Run enrichment sources for an account."""
+    _validate_slug(slug)
     from prism.services.enrichment.orchestrator import EnrichmentOrchestrator
 
     account = await dal.get_account(slug)
@@ -250,6 +269,7 @@ async def get_analyses(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> list[dict]:
     """Get analysis history for an account."""
+    _validate_slug(slug)
     account = await dal.get_account(slug)
     if not account:
         raise HTTPException(status_code=404, detail=f"Account '{slug}' not found")
@@ -274,6 +294,7 @@ async def get_signals(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> list[SignalResponse]:
     """List signals for an account with decay weights."""
+    _validate_slug(slug)
     from prism.analysis.signal_decay import calculate_decay_weight
     from prism.data.loader import load_signals
 
@@ -307,6 +328,7 @@ async def upload_content(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> dict:
     """Upload content manually for an account."""
+    _validate_slug(slug)
     account = await dal.get_account(slug)
     if not account:
         raise HTTPException(status_code=404, detail=f"Account '{slug}' not found")
@@ -324,7 +346,8 @@ async def upload_content(
         # For fixture mode, just acknowledge receipt
         return {"status": "received", "source_type": body.source_type}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.exception("Error uploading content for %s", slug)
+        raise HTTPException(status_code=500, detail="Failed to process content upload")
 
 
 # ─── Dossiers ────────────────────────────────────────────────────────────────
@@ -336,14 +359,17 @@ async def get_latest_dossier(
     dal: DataAccessLayer = Depends(get_dal_dep),
 ) -> DossierResponse:
     """Get the latest dossier for an account."""
+    _validate_slug(slug)
     from prism.config import DOSSIERS_DIR
 
     account = await dal.get_account(slug)
     if not account:
         raise HTTPException(status_code=404, detail=f"Account '{slug}' not found")
 
-    # Check filesystem for dossier
-    dossier_path = DOSSIERS_DIR / f"{slug}_dossier.md"
+    # Check filesystem for dossier — resolve to prevent path traversal
+    dossier_path = (DOSSIERS_DIR / f"{slug}_dossier.md").resolve()
+    if not str(dossier_path).startswith(str(DOSSIERS_DIR.resolve())):
+        raise HTTPException(status_code=400, detail="Invalid slug")
     if dossier_path.exists():
         return DossierResponse(
             account_slug=slug,

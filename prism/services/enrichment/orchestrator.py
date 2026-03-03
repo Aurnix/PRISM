@@ -72,7 +72,7 @@ class EnrichmentOrchestrator:
                     domain,
                     counts,
                 )
-            except Exception as e:
+            except (OSError, ValueError, TypeError, RuntimeError, KeyError) as e:
                 logger.warning(
                     "Enrichment source '%s' failed for %s: %s",
                     source_name,

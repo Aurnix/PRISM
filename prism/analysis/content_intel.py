@@ -45,11 +45,15 @@ def _load_prompt(stage: str) -> str:
 class ContentIntelligenceChain:
     """The 4-stage Content Intelligence analysis pipeline."""
 
+    # Max concurrent LLM calls for per-person analysis
+    _MAX_CONCURRENT_LLM = 5
+
     def __init__(self, llm: Optional[LLMBackend] = None) -> None:
         if llm is None:
             from prism.services import get_llm_backend
             llm = get_llm_backend()
         self.llm = llm
+        self._llm_semaphore = asyncio.Semaphore(self._MAX_CONCURRENT_LLM)
 
     async def analyze(
         self,
@@ -257,35 +261,36 @@ class ContentIntelligenceChain:
         trajectory = synthesis.trajectory.get("direction", "unknown")
 
         async def analyze_person(contact: ContactRecord) -> Optional[PersonAnalysis]:
-            posts = contact.linkedin_posts[:PRISM_MAX_PERSON_POSTS]
-            corpus_text = "\n\n".join(
-                f"[{post.date}] {post.text}" for post in posts
-            )
+            async with self._llm_semaphore:
+                posts = contact.linkedin_posts[:PRISM_MAX_PERSON_POSTS]
+                corpus_text = "\n\n".join(
+                    f"[{post.date}] {post.text}" for post in posts
+                )
 
-            user_prompt = prompt_template.format(
-                contact_name=contact.name,
-                contact_title=contact.title,
-                company_name=account.company_name,
-                contact_corpus=corpus_text,
-                primary_pain_themes=", ".join(pain_themes) if pain_themes else "None identified",
-                org_stress_level=stress_level,
-                solution_sophistication=soph,
-                trajectory_direction=trajectory,
-            )
-
-            result = await self.llm.query_json(system_prompt, user_prompt)
-            if result:
-                return PersonAnalysis(
+                user_prompt = prompt_template.format(
                     contact_name=contact.name,
                     contact_title=contact.title,
-                    pain_alignment=result.get("pain_alignment", {}),
-                    buying_readiness=result.get("buying_readiness", {}),
-                    messaging_resonance=result.get("messaging_resonance", {}),
-                    influence_level=result.get("influence_level", {}),
-                    recommended_approach=result.get("recommended_approach", ""),
-                    recommended_avoid=result.get("recommended_avoid", ""),
+                    company_name=account.company_name,
+                    contact_corpus=corpus_text,
+                    primary_pain_themes=", ".join(pain_themes) if pain_themes else "None identified",
+                    org_stress_level=stress_level,
+                    solution_sophistication=soph,
+                    trajectory_direction=trajectory,
                 )
-            return None
+
+                result = await self.llm.query_json(system_prompt, user_prompt)
+                if result:
+                    return PersonAnalysis(
+                        contact_name=contact.name,
+                        contact_title=contact.title,
+                        pain_alignment=result.get("pain_alignment", {}),
+                        buying_readiness=result.get("buying_readiness", {}),
+                        messaging_resonance=result.get("messaging_resonance", {}),
+                        influence_level=result.get("influence_level", {}),
+                        recommended_approach=result.get("recommended_approach", ""),
+                        recommended_avoid=result.get("recommended_avoid", ""),
+                    )
+                return None
 
         results = await asyncio.gather(
             *(analyze_person(c) for c in contacts),

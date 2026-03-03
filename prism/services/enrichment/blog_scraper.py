@@ -46,7 +46,7 @@ class BlogScraperEnrichment(EnrichmentSource):
 
         scraper = BlogScraper()
         try:
-            posts = await scraper.scrape_blog(
+            posts = await scraper.scrape(
                 blog_url=blog_url or "",
                 blog_rss=blog_rss,
                 slug=slug or domain,
