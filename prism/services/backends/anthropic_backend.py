@@ -84,6 +84,10 @@ class AnthropicBackend(LLMBackend):
 
                 input_tokens = response.usage.input_tokens
                 output_tokens = response.usage.output_tokens
+
+                if not response.content or not hasattr(response.content[0], "text"):
+                    logger.error("Empty or non-text response from Anthropic")
+                    return None
                 content = response.content[0].text
 
                 llm_response = LLMResponse(

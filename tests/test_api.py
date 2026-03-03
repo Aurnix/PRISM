@@ -73,7 +73,7 @@ class TestContentEndpoints:
         resp = client.post(
             "/accounts/nonexistent_xyz_abc/content",
             json={
-                "source_type": "blog_post",
+                "source_type": "blog",
                 "title": "Test Post",
                 "raw_text": "Some content here",
                 "publish_date": "2026-02-15",

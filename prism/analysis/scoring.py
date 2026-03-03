@@ -238,7 +238,8 @@ def score_new_leader(contacts: list[ContactRecord], current_date: date) -> float
         days_in_role = (current_date - contact.start_date_current_role).days
 
         if 30 <= days_in_role <= 120:
-            score = 1.0 if "finance" in contact.title.lower() or "controller" in contact.title.lower() else 0.95
+            title_lower = (contact.title or "").lower()
+            score = 1.0 if "finance" in title_lower or "controller" in title_lower else 0.95
         elif days_in_role < 30:
             score = 0.60
         elif 120 < days_in_role <= 180:

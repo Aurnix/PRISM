@@ -95,8 +95,14 @@ class LocalInferenceBackend(LLMBackend):
                     return None
 
                 data = resp.json()
-                choice = data["choices"][0]
-                content = choice["message"]["content"]
+                choices = data.get("choices")
+                if not choices:
+                    logger.error("Local inference returned no choices")
+                    return None
+                content = choices[0].get("message", {}).get("content")
+                if content is None:
+                    logger.error("Local inference response missing message content")
+                    return None
 
                 usage = data.get("usage", {})
                 input_tokens = usage.get("prompt_tokens", 0)
